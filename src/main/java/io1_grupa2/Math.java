@@ -9,9 +9,8 @@ public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsDiv, I
     
     public double Multiplication(double A, double B) { return A * B; }
 
-    public double Difference(double A, double B) {
-        return A - B;
-    }
+    public double Difference(double A, double B) { return A - B; }
 
+    //implementation methode division
     public double Division(double A, double B){ return A / B;}
 }
