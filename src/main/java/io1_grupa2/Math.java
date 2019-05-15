@@ -6,4 +6,5 @@ public class Math implements IArithmeticAdd
     {
         return A + B;
     }
+    public double Multiplication(double A, double B) { return A * B; }git
 }
