@@ -1,5 +1,4 @@
-package io1_grupa2;
-
+package main.java.io1_grupa2;
 
 public class Main{
 
