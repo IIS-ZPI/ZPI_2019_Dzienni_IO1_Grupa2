@@ -7,6 +7,8 @@ public class Main{
         System.out.println("ZPI_2019_Dzienni_IO1_Grupa2"
                            + "\nTeam Leader: skamila - tester"
                             + "\nAzahil - developer"
-                          + "\nPelekon - developer");
+                          + "\nPelekon - developer"
+                           + "\nliberadzkih - developer"
+                            + "\nKostdmex - operations");
     }
 }
