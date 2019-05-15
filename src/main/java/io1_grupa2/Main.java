@@ -8,6 +8,7 @@ public class Main{
                            + "\nTeam Leader: skamila - tester"
                             + "\nAzahil - developer"
                           + "\nPelekon - developer"
+                           + "\nliberadzkih - developer"
                             + "\nKostdmex - operations");
     }
 }
