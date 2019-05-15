@@ -8,7 +8,7 @@ public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsDiv, I
     }
     
     public double Multiplication(double A, double B) { return A * B; }
-
+    //Method for diff
     public double Difference(double A, double B) {
         return A - B;
     }
