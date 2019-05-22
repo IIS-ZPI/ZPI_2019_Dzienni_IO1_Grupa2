@@ -1,7 +1,8 @@
 package main.java.io1_grupa2;
 
-public interface IArithmeticsMult {
-
-    double multiplication(double a, double b);
-
+// interface which provides method
+public interface IArithmeticsMult
+{
+    //multiplication method
+    double multiplication(double A, double B);
 }
