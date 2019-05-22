@@ -32,6 +32,4 @@ public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsMult, 
         return a * a;
     }
 
-    //to był pomysł Bartka
-
 }
