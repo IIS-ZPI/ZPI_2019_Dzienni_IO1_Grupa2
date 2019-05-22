@@ -30,7 +30,6 @@ public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsMult, 
     public double division(double a, double b) {
         return a / b;
     }
-    //Komentarz ?
 
     //implementation method power
     @Override
