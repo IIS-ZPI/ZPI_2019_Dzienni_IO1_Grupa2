@@ -25,4 +25,6 @@ public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsMult, 
         return a / b;
     }
 
+    //Komentarz ?
+
 }
