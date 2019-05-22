@@ -1,6 +1,6 @@
 package main.java.io1_grupa2;
 
-public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsMult, IArithmeticsDiv {
+public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsMult, IArithmeticsDiv, IArithmeticPow {
 
     // Method which do addition of 2 double variables
     @Override
@@ -23,6 +23,11 @@ public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsMult, 
     @Override
     public double division(double a, double b) {
         return a / b;
+    }
+
+    @Override
+    public double power(double a) {
+        return a * 2;
     }
 
 }
