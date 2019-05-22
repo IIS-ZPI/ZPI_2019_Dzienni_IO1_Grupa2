@@ -8,6 +8,7 @@ public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsMult, 
         return a + b;
     }
 
+    //Method for diff
     @Override
     public double difference(double a, double b) {
         return a - b;
@@ -18,6 +19,7 @@ public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsMult, 
         return a * b;
     }
 
+    //implementation methode division
     @Override
     public double division(double a, double b) {
         return a / b;
