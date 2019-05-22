@@ -5,6 +5,5 @@ public interface IArithmeticAdd {
 
     // Method which do operation of addition of 2 double variables
     double addition(double a, double b);
-    // kod ktory cos psuje
 
 }
