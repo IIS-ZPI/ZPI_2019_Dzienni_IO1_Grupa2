@@ -1,7 +1,7 @@
 package main.java.io1_grupa2;
 
-//interface with methodes to divide
-public interface IArithmeticsDiv {
-    // methode providing division
-    double Division(double A, double B);
+public interface IArithmeticDiff {
+
+    double difference(double a, double b);
+
 }
