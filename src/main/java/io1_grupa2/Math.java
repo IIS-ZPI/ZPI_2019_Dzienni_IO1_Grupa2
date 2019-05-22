@@ -23,5 +23,4 @@ public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsMult, 
         return a / b;
     }
 
-    public double Division(double A, double B){ return A / B;}
 }
