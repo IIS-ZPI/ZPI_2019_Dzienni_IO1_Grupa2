@@ -7,7 +7,7 @@ public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsDiv, I
     {
         return A + B;
     }
-    
+    // Method which provides multiplication of 2 double variables
     public double Multiplication(double A, double B) { return A * B; }
 
     public double Difference(double A, double B) {
