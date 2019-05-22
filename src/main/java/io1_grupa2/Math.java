@@ -20,11 +20,6 @@ public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsMult, 
         return a * b;
     }
 
-    /*
-        niby nowa funkcjonalnosc
-     */
-
-
     //implementation methode division
     @Override
     public double division(double a, double b) {
