@@ -1,7 +1,7 @@
 package main.java.io1_grupa2;
-//Method for difference
+//Interface for difference
 public interface IArithmeticDiff {
-
+    //Method for difference
     double difference(double a, double b);
 
 }

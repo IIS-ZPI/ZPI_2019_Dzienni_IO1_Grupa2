@@ -13,6 +13,7 @@ public class Math implements IArithmeticAdd, IArithmeticDiff, IArithmeticsMult, 
     public double difference(double a, double b) {
         return a - b;
     }
+
     @Override
     public double multiplication(double a, double b) {
         return a * b;
