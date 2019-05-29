@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sample.api.ApiConnector;
 
 public class Main extends Application {
 
@@ -18,6 +19,10 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+
         launch(args);
+        // Test code
+        ApiConnector api =  ApiConnector.GetInstance();
+        api.RequestTopExchangeRates("a", 2);
     }
 }
