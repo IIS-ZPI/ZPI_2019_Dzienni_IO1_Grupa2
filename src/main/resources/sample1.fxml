@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <children>
+        <VBox prefHeight="530.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <ComboBox fx:id="queriesComboBox" onAction="#comboBoxListener" prefWidth="350.0" promptText="Zapytania">
+                    <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" top="10.0" />
+                    </VBox.margin>
+                </ComboBox>
+                <ListView fx:id="listOfQueryParameters" prefHeight="200.0" prefWidth="200.0" />
+                <HBox prefHeight="16.0" prefWidth="591.0" spacing="69.0">
+                    <children>
+                        <Button fx:id="doButton" mnemonicParsing="false" onAction="#fillData" prefWidth="150.0" text="Wykonaj" />
+                        <Button fx:id="clearListButton" mnemonicParsing="false" onAction="#clearList" prefWidth="150.0" text="Wyczyść listę" />
+                        <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exit" prefWidth="150.0" text="Wyjdź" />
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                </HBox>
+                <ListView fx:id="listOfData" prefHeight="224.0" prefWidth="600.0" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
