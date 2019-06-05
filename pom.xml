@@ -22,7 +22,9 @@
     </dependencies>
 
     <packaging>jar</packaging>
-
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <build>
         <plugins>
             <plugin>
@@ -30,7 +32,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <encoding>UTF-8</encoding>
                     <source>10</source>
                     <target>10</target>
                 </configuration>
