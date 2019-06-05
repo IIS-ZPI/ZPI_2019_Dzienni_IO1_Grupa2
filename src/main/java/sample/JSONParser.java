@@ -22,12 +22,12 @@ public class JSONParser {
             a.remove();
         }
         System.out.println(obj2.getJSONObject(1));*/
-        String[][] a=parser(obj);
-        for (String[] b:a
-             ) {
-            for (String c: b
-                 ) {
-                System.out.print(c+" ");
+        String[][] a = parser(obj);
+        for (String[] b : a
+        ) {
+            for (String c : b
+            ) {
+                System.out.print(c + " ");
             }
             System.out.println();
         }
@@ -46,17 +46,22 @@ public class JSONParser {
 
     }
 
-    static String[][] parser(JSONObject jsonObject){
-        final JSONArray jsonArray = jsonObject.getJSONArray("rates");
-        String[][] strings = new String[jsonArray.length()][jsonArray.getJSONObject(0).length()];
-        for (int i = 0; i < jsonArray.length(); i++) {
-            final JSONObject rate = jsonArray.getJSONObject(i);
-            Iterator iterator = rate.keys();
-            int j=0;
-            while (iterator.hasNext()){
-                strings[i][j++]=rate.get((String) iterator.next()).toString();
+    static String[][] parser(JSONObject jsonObject) {
+        try {
+            final JSONArray jsonArray = jsonObject.getJSONArray("rates");
+            String[][] strings = new String[jsonArray.length()][jsonArray.getJSONObject(0).length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                final JSONObject rate = jsonArray.getJSONObject(i);
+                Iterator iterator = rate.keys();
+                int j = 0;
+                while (iterator.hasNext()) {
+                    strings[i][j++] = rate.get((String) iterator.next()).toString();
+                }
             }
+            return strings;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return new String[0][0];
         }
-        return strings;
     }
 }
