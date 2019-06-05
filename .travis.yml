@@ -2,5 +2,20 @@ language: java
 install: true
 jdk:
 - openjdk10
+branches:
+  only:
+    - development
 script:
 - mvn install
+jobs:
+  include:
+    - stage: GitHub Release
+      script: echo "Deploying to GitHub releases ..."
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: $GITHUB_TOKEN
+        keep_history: true
+        on:
+          branch: deployment
+        target_branch: release
