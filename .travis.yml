@@ -2,18 +2,19 @@ language: java
 install: true
 jdk:
 - openjdk10
+branches:
+  only:
+    - development
 script:
 - mvn install
 jobs:
   include:
-    - script: echo "Running unit tests (1)"
-    - script: echo "Running unit tests (2)"
     - stage: GitHub Release
       script: echo "Deploying to GitHub releases ..."
       deploy:
         provider: pages
         skip_cleanup: true
-        github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+        github_token: $GITHUB_TOKEN
         keep_history: true
         on:
           branch: deployment
