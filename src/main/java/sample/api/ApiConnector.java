@@ -1,6 +1,7 @@
 package sample.api;
 
-import java.io.BufferedReader;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import sample.api.entities.CurrencyRatesContainer;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -50,7 +51,7 @@ public class ApiConnector
         return true;
     }
 
-    public void RequestTopExchangeRates(String tableType, int topCount)
+    public CurrencyRatesContainer[] RequestTopExchangeRates(String tableType, int topCount)
     {
         StringBuilder builder = new StringBuilder("http://api.nbp.pl/api/exchangerates/tables/");
         builder.append(tableType);
@@ -59,15 +60,20 @@ public class ApiConnector
         builder.append("/?format=json");
         System.out.println(builder.toString());
         if (!ConnectToApi(builder.toString()))
-            return;
+            return null;
 
-        Request();
+        CurrencyRatesContainer[] requestResult = Request(CurrencyRatesContainer[].class);
+        //for (var node : requestResult)
+            //System.out.println(node.toString());
+        return  requestResult;
     }
 
-    private void Request()
+    private <T> T[] Request(Class<T[]> classType)
     {
         if (!isConncected)
-            return;
+            return null;
+
+        T[] result = null;
 
         try
         {
@@ -75,11 +81,15 @@ public class ApiConnector
             connection.connect();
 
             if (connection.getResponseCode() == 200)
-                GetJsonFileFromResponse();
+                result = GetJsonFileFromResponse(classType);
         }
-        catch (Exception e) { }
+        catch (Exception e)
+        {
+            System.out.println("Blad podczas pobierania danych z api!");
+        }
 
         CloseConnection();
+        return result;
     }
 
     private void CloseConnection()
@@ -90,7 +100,7 @@ public class ApiConnector
         isConncected = false;
     }
 
-    private void GetJsonFileFromResponse()
+    private <T> T[] GetJsonFileFromResponse(Class<T[]> classType)
     {
         InputStreamReader input;
         try
@@ -100,25 +110,26 @@ public class ApiConnector
         catch (Exception e)
         {
             System.out.println("Blad podczas uzyskiwania strumienia danych!");
-            return;
+            return null;
         }
 
-        BufferedReader reader = new BufferedReader(input);
-        // retro fit 2
+        //BufferedReader reader = new BufferedReader(input);
+        ObjectMapper mapper = new ObjectMapper();
+        T[] result = null;
 
         // Debug code
         try
         {
-            String str = reader.readLine();
-            while (str != null)
-            {
-                System.out.println(str);
-                str = reader.readLine();
-            }
+            result =  mapper.readValue(input, classType);
 
-        }catch (Exception e)
-        {
-            System.out.println("Koniec pliku!");
         }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("Blad podczas mapowania obiektu!");
+            return null;
+        }
+
+        return result;
     }
 }

@@ -17,13 +17,5 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
-    public static void main(String[] args) {
-
-        launch(args);
-        // Test code
-        ApiConnector api =  ApiConnector.GetInstance();
-        api.RequestTopExchangeRates("a", 2);
-    }
-
+    public static void main(String[] args) { launch(args); }
 }
