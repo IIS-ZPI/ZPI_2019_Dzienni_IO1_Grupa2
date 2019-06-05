@@ -23,7 +23,7 @@ public class Main extends Application {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK){
-            Parent root = FXMLLoader.load(getClass().getResource("sample1.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("..\\main_window.fxml"));
             primaryStage.setTitle("Gold and exchange rates");
             primaryStage.setScene(new Scene(root, 600, 500));
             primaryStage.show();
