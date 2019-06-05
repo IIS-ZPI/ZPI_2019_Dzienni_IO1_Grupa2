@@ -1,0 +1,6 @@
+language: java
+install: true
+jdk:
+- openjdk10
+script:
+- mvn install
