@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import sample.api.ApiConnector;
 
 import java.util.Optional;
 
@@ -32,9 +33,5 @@ public class Main extends Application {
         }
     }
 
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
+    public static void main(String[] args) { launch(args); }
 }
