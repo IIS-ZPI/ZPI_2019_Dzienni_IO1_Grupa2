@@ -132,4 +132,22 @@ public class ApiConnector
 
         return result;
     }
+
+    public static <T> T[] GetJsonFileFromStringResponse(Class<T[]> classType, String jsonString)
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        T[] result = null;
+
+        try
+        {
+            result = mapper.readValue(jsonString, classType);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            System.out.println("Blad podczas mapowania obiektu!");
+        }
+
+        return result;
+    }
 }
