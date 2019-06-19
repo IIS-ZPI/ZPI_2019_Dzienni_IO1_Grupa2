@@ -20,7 +20,7 @@ before_deploy:
   - git tag $TRAVIS_TAG
 deploy:
   provider: releases
-  api_key: GITHUB_TOKEN
+  api_key: $GITHUB_TOKEN
   file: /home/travis/build/IIS-ZPI/ZPI_2019_Dzienni_IO1_Grupa2/target/ZPI_2019_Dzienni_IO1_Grupa2-1.0-SNAPSHOT.jar
   skip_cleanup: true
   on:
