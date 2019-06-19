@@ -38,6 +38,9 @@ public class Controller implements Initializable {
     private Button exitButton;
 
     @FXML
+    private Button drawChartButton;
+
+    @FXML
     private ListView<String> listOfQueryParameters;
     ObservableList<String> parameters1 = FXCollections.observableArrayList("Sesje wzrostowe", "Sesje spadkowe", "Sesje bez zmian");
     ObservableList<String> parameters2 = FXCollections.observableArrayList("Mediana", "Dominanta", "Odchylenie standardowe", "Współczynnik zmienności");
@@ -60,7 +63,7 @@ public class Controller implements Initializable {
 
     @FXML
     private void executeQuery(){
-        if(!listOfQueryParameters.getSelectionModel().isEmpty()) {
+        if(!listOfQueryParameters.getSelectionModel().isEmpty() && !currencyComboBox.getSelectionModel().isEmpty() && !periodComboBox.getSelectionModel().isEmpty()) {
             listOfData.getItems().clear();
             queryValue = listOfQueryParameters.getSelectionModel().getSelectedItem()
                          + "  " + currencyComboBox.getSelectionModel().getSelectedItem()
@@ -86,18 +89,20 @@ public class Controller implements Initializable {
 
     private void setListViewContent(String query){
         listOfQueryParameters.getItems().clear();
-        //Ilość sesji wzrostowych, spadkowych i bez zmian
-        if(query == queries[0]){
+
+        if(query == queries[0])
             listOfQueryParameters.getItems().addAll(parameters1);
-        }
 
-        if(query == queries[1]){
+        if(query == queries[1])
             listOfQueryParameters.getItems().addAll(parameters2);
-        }
 
-        if(query == queries[2]){
+        if(query == queries[2])
             listOfQueryParameters.getItems().addAll(parameters3);
-        }
+    }
+
+    @FXML
+    private void drawChart(){
+
     }
 
 

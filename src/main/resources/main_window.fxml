@@ -31,7 +31,7 @@
                     </VBox.margin>
                 </HBox>
                 <ListView fx:id="listOfData" prefHeight="269.0" prefWidth="600.0" />
-            <Button fx:id="drawChartButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="193.0" text="Rysuj wykres" textAlignment="CENTER" />
+            <Button fx:id="drawChartButton" mnemonicParsing="false" onAction="#drawChart" prefHeight="26.0" prefWidth="193.0" text="Rysuj wykres" textAlignment="CENTER" />
             </children>
         </VBox>
     </children>
