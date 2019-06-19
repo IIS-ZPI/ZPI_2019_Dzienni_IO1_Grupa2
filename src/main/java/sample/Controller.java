@@ -83,6 +83,15 @@ public class Controller implements Initializable {
             queryValueList.add(queryValue);
             listOfData.getItems().addAll(queryValueList);
         }
+        if(listOfQueryParameters.getSelectionModel().isEmpty() && currencyComboBox.getSelectionModel().isEmpty() && periodComboBox.getSelectionModel().isEmpty()) {
+            listOfData.getItems().clear();
+            CurrencyRatesContainer[] container = api.RequestTopExchangeRates("A", 1);
+            CurrencyRatesContainer[] container2 = api.RequestTopExchangeRates("B", 1);
+            //String lines[] = string.split("\\r?\\n");
+            listOfData.getItems().addAll(container[0].toString());
+            listOfData.getItems().addAll(container2[0].toString());
+
+        }
     }
 
     @FXML
