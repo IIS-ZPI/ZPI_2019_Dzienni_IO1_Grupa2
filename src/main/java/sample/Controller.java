@@ -6,15 +6,27 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import sample.api.ApiConnector;
 import sample.api.entities.CurrencyRates;
+import sample.api.entities.CurrencyRatesContainer;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+
+    ApiConnector api = ApiConnector.GetInstance();
+
     @FXML
     private ComboBox<String> queriesComboBox;
     String[] queries = {"Ilość sesji wzrostowych, spadkowych i bez zmian",
@@ -22,7 +34,7 @@ public class Controller implements Initializable {
                     "Rozkład zmian miesięcznych i kwartalnych dla par walutowych"};
     @FXML
     private ComboBox<String> currencyComboBox;
-    ObservableList<String> currency = FXCollections.observableArrayList("USD", "PLN", "CHF");
+    ObservableList<String> currency = FXCollections.observableArrayList();
 
     @FXML
     private ComboBox<String> periodComboBox;
@@ -82,6 +94,7 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        fillCurrencyComboBox();
         queriesComboBox.getItems().addAll(queries[0], queries[1], queries[2]);
         periodComboBox.getItems().addAll(periods);
         currencyComboBox.getItems().addAll(currency);
@@ -102,7 +115,30 @@ public class Controller implements Initializable {
 
     @FXML
     private void drawChart(){
+        /*
+        try {
+            Parent root = new FXMLLoader().load(getClass().getResource("..\\line_chart.fxml"));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("Chart");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
+    }
 
+    private void fillCurrencyComboBox(){
+        CurrencyRatesContainer[] container = api.RequestTopExchangeRates("A", 1);
+        CurrencyRatesContainer[] container2 = api.RequestTopExchangeRates("B", 1);
+        for(int i=0; i<container[0].getRates().length; i++){
+            currency.add(container[0].getRates()[i].getCode() + " - " + container[0].getRates()[i].getCurrency());
+        }
+        for(int i=0; i<container2[0].getRates().length; i++){
+            currency.add(container2[0].getRates()[i].getCode() + " - " + container2[0].getRates()[i].getCurrency());
+        }
     }
 
 
