@@ -5,17 +5,6 @@ jdk:
 branches:
   only:
     - development
+    - release
 script:
 - mvn install
-jobs:
-  include:
-    - stage: GitHub Release
-      script: echo "Deploying to GitHub releases ..."
-      deploy:
-        provider: pages
-        skip_cleanup: true
-        github_token: $GITHUB_TOKEN
-        keep_history: true
-        on:
-          branch: deployment
-        target_branch: release
