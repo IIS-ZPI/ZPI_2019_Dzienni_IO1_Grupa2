@@ -1,4 +1,7 @@
-package sample.api;
+package sample;
+
+import sample.api.ApiConnector;
+import sample.api.IApiDataProvider;
 
 public class DataProvider implements IDataProvider
 {
