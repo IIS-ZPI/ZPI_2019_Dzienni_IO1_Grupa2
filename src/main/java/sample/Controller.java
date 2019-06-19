@@ -7,10 +7,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import sample.api.entities.CurrencyRates;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,13 +17,19 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
     @FXML
     private ComboBox<String> queriesComboBox;
+    String[] queries = {"Ilość sesji wzrostowych, spadkowych i bez zmian",
+                    "Miary statystyczne(mediana, dominanta, odchylenie standardowe, współczynnik zmienności",
+                    "Rozkład zmian miesięcznych i kwartalnych dla par walutowych"};
+    @FXML
+    private ComboBox<String> currencyComboBox;
+    ObservableList<String> currency = FXCollections.observableArrayList("USD", "PLN", "CHF");
 
     @FXML
-    private ListView<String> listOfQueryParameters;
-    ObservableList<String> list1 = FXCollections.observableArrayList();
+    private ComboBox<String> periodComboBox;
+    ObservableList<String> periods = FXCollections.observableArrayList("1 tydzień", "2 tygodnie", "1 miesiąc", "3 miesiące", "6 miesięcy", "rok");
 
     @FXML
-    private Button doButton;
+    private Button executeButton;
 
     @FXML
     private Button clearListButton;
@@ -33,27 +38,19 @@ public class Controller implements Initializable {
     private Button exitButton;
 
     @FXML
+    private ListView<String> listOfQueryParameters;
+    ObservableList<String> parameters1 = FXCollections.observableArrayList("Sesje wzrostowe", "Sesje spadkowe", "Sesje bez zmian");
+    ObservableList<String> parameters2 = FXCollections.observableArrayList("Mediana", "Dominanta", "Odchylenie standardowe", "Współczynnik zmienności");
+    ObservableList<String> parameters3 = FXCollections.observableArrayList("Rozkład zmian miesięcznych", "Rozklad zmian kwartalnych");
+
+    @FXML
     private ListView<String> listOfData;
-    ObservableList<String> list2 = FXCollections.observableArrayList();
+    String queryValue;
+    ObservableList<String> queryValueList = FXCollections.observableArrayList();
 
     @FXML
     public void comboBoxListener() {
-        String selection = queriesComboBox.getSelectionModel().getSelectedItem();
-        list1.add(selection);
-        listOfQueryParameters.setItems(list1);
-
-    }
-
-    @FXML
-    private void clearList(){
-        list2.clear();
-        listOfData.setItems(list2);
-    }
-
-    @FXML
-    private void fillData(){
-        list2.addAll(list1);
-        listOfData.setItems(list2);
+        setListViewContent(queriesComboBox.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -61,14 +58,46 @@ public class Controller implements Initializable {
         System.exit(0);
     }
 
+    @FXML
+    private void executeQuery(){
+        if(!listOfQueryParameters.getSelectionModel().isEmpty()) {
+            listOfData.getItems().clear();
+            queryValue = listOfQueryParameters.getSelectionModel().getSelectedItem()
+                         + "  " + currencyComboBox.getSelectionModel().getSelectedItem()
+                         + " za okres " + periodComboBox.getSelectionModel().getSelectedItem();
+            queryValueList.add(queryValue);
+            listOfData.getItems().addAll(queryValueList);
+        }
+    }
+
+    @FXML
+    private void clearList(){
+        queryValueList.clear();
+        listOfData.getItems().clear();
+        listOfData.getItems().addAll(queryValueList);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        queriesComboBox.getItems().addAll(queries[0], queries[1], queries[2]);
+        periodComboBox.getItems().addAll(periods);
+        currencyComboBox.getItems().addAll(currency);
+    }
 
-        queriesComboBox.getItems().addAll("query 1", "query 2", "query 3", "query 4", "query 5");
-        queriesComboBox.getSelectionModel().select(1);
+    private void setListViewContent(String query){
+        listOfQueryParameters.getItems().clear();
+        //Ilość sesji wzrostowych, spadkowych i bez zmian
+        if(query == queries[0]){
+            listOfQueryParameters.getItems().addAll(parameters1);
+        }
 
-        listOfQueryParameters.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        listOfQueryParameters.setItems(list1);
+        if(query == queries[1]){
+            listOfQueryParameters.getItems().addAll(parameters2);
+        }
+
+        if(query == queries[2]){
+            listOfQueryParameters.getItems().addAll(parameters3);
+        }
     }
 
 
