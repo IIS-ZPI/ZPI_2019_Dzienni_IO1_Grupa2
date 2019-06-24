@@ -7,7 +7,8 @@ branches:
     - development
     - release
 script:
-  - mvn install
+  - mvn install -DskipTests
+  - mvn verify
 stages:
       - compile
       - test
