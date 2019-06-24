@@ -74,6 +74,10 @@ public class Statistic {
 
     }
 
+    public static double coefficientOfVariation(double[] numbers) {
+        return standardDeviation(numbers) / average(numbers);
+    }
+
     public static double round(double number, int accuracy) {
         return Double.parseDouble(String.format(Locale.getDefault(), "%." + accuracy + "f", number).replace(',', '.'));
     }
