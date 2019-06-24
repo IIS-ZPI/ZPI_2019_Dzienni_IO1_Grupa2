@@ -26,7 +26,11 @@ jobs:
       script: - mvn verify
     - stage: deploy
       name: deploy
-      if: branch = release
+stages:
+  - compile
+  - test
+  - name: deploy
+    if: branch = master
 before_deploy:
   - git config --local user.name "kostdmex"
   - git config --local user.email "209418@edu.p.lodz.pl"
