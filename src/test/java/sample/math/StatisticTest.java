@@ -6,9 +6,9 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static sample.math.Math.*;
+import static sample.math.Statistic.*;
 
-public class MathTest {
+public class StatisticTest {
 
     @Test
     public void medianOfAnOddNumberOfNumbers() {

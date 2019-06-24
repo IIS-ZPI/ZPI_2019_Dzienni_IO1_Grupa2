@@ -2,7 +2,7 @@ package sample.math;
 
 import java.util.*;
 
-public class Math {
+public class Statistic {
 
     public static double median(double[] numbers) {
         Arrays.sort(numbers);
