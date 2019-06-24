@@ -6,6 +6,16 @@ branches:
   only:
     - development
     - release
+notifications:
+  email:
+    on_success: never
+    on_failure: always
+    recipients:
+      - 209418@edu.p.lodz.pl
+      - 209377@edu.p.lodz.pl
+      - 209364@edu.p.lodz.pl
+      - 209279@edu.p.lodz.pl
+      - 209472@edu.p.lodz.pl
 jobs:
   include:
     - stage: compile
@@ -14,16 +24,6 @@ jobs:
     - stage: test
       name: "Testing"
       script: - mvn verify
-      notifications:
-        email:
-          on_success: never
-          on_failure: always
-          recipients:
-            - 209418@edu.p.lodz.pl
-            - 209377@edu.p.lodz.pl
-            - 209364@edu.p.lodz.pl
-            - 209279@edu.p.lodz.pl
-            - 209472@edu.p.lodz.pl
     - stage: deploy
       name: deploy
       if: branch = release
