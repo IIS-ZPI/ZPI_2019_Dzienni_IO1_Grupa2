@@ -6,9 +6,17 @@ branches:
   only:
     - development
     - release
-script:
-  - mvn install -DskipTests
-  - mvn verify
+jobs:
+  include:
+    - stage: compile
+      name: "Compiling"
+      script: - mvn install -DskipTests
+    - stage: test
+      name: "Testing"
+      script: - mvn verify
+    - stage: deploy
+      name: deploy
+      if: branch = release
 stages:
       - compile
       - test
