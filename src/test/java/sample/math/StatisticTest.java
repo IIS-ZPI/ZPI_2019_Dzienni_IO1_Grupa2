@@ -49,4 +49,24 @@ public class StatisticTest {
         assertThat(result, Is.is(3.0));
     }
 
+    @Test
+    public void averageTest2() {
+        double[] numbers = {2, 5, 1, 3};
+        double result = average(numbers);
+        assertThat(result, Is.is(2.75));
+    }
+
+    @Test
+    public void standardDeviationTest() {
+        double[] numbers = {2, 5, 1, 3};
+        double result = standardDeviation(numbers);
+        assertThat(Statistic.round(result, 1), Is.is(1.5));
+    }
+
+    @Test
+    public void roundTest() {
+        double result = round(1.479019945, 2);
+        assertThat(Statistic.round(result, 1), Is.is(1.5));
+    }
+
 }

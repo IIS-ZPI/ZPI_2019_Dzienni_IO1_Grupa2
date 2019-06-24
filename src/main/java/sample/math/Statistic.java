@@ -51,7 +51,15 @@ public class Statistic {
     }
 
     public static double standardDeviation(double[] numbers) {
-        return 0;
+
+        double averange = Statistic.average(numbers);
+        double sum = 0;
+
+        for (int i = 0; i < numbers.length; i++) {
+            sum += Math.pow(numbers[i] - averange, 2);
+        }
+
+        return Math.sqrt(sum / numbers.length);
     }
 
     public static double average(double[] numbers) {
@@ -64,6 +72,10 @@ public class Statistic {
 
         return sum / numbers.length;
 
+    }
+
+    public static double round(double number, int accuracy) {
+        return Double.parseDouble(String.format(Locale.getDefault(), "%." + accuracy + "f", number).replace(',', '.'));
     }
 
 }
