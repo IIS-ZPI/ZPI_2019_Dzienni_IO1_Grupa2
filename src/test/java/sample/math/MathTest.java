@@ -42,4 +42,11 @@ public class MathTest {
         assertThat(result.get(2), Is.is(5.0));
     }
 
+    @Test
+    public void averageTest() {
+        double[] numbers = {1, 2, 3, 4, 5};
+        double result = average(numbers);
+        assertThat(result, Is.is(3.0));
+    }
+
 }
