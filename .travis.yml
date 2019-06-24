@@ -26,3 +26,13 @@ deploy:
   skip_cleanup: true
   on:
     branch: release
+notifications:
+  email:
+    recipients:
+      - 209418@edu.p.lodz.pl
+      - 209377@edu.p.lodz.pl
+      - 209364@edu.p.lodz.pl
+      - 209279@edu.p.lodz.pl
+      - 209472@edu.p.lodz.pl
+    on_success: never
+    on_failure: always
