@@ -1,4 +1,6 @@
-package sample;
+package sample.data_providers;
+
+import sample.PeriodEnum;
 
 public interface IDataProvider
 {
