@@ -11,6 +11,16 @@ stages:
       - test
       - name: deploy
         if: branch = release
+notifications:
+  email:
+    recipients:
+      - 209418@edu.p.lodz.pl
+      - 209377@edu.p.lodz.pl
+      - 209364@edu.p.lodz.pl
+      - 209279@edu.p.lodz.pl
+      - 209472@edu.p.lodz.pl
+    on_success: never
+    on_failure: always
 before_deploy:
   - git config --local user.name "kostdmex"
   - git config --local user.email "209418@edu.p.lodz.pl"
