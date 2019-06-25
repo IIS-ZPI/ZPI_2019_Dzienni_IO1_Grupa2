@@ -1,6 +1,7 @@
-package sample;
+package sample.data_providers;
 
-import sample.api.ApiConnector;
+import sample.PeriodEnum;
+import sample.api.ApiConnectorFactory;
 import sample.api.IApiDataProvider;
 
 public class DataProvider implements IDataProvider
@@ -9,7 +10,7 @@ public class DataProvider implements IDataProvider
 
     public DataProvider()
     {
-        apiDataProvider = ApiConnector.GetInstance();
+        apiDataProvider = ApiConnectorFactory.GetDefaultConnector();
     }
 
     @Override
