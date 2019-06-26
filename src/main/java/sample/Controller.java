@@ -18,6 +18,8 @@ import javafx.stage.StageStyle;
 import sample.api.ApiConnector;
 import sample.api.entities.CurrencyRates;
 import sample.api.entities.CurrencyRatesContainer;
+import sample.data_providers.DataProviderFactory;
+import sample.data_providers.IDataProvider;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,7 +27,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
-    ApiConnector api = ApiConnector.GetInstance();
+    IDataProvider provider = DataProviderFactory.GetDefaultDataProvider();
 
     @FXML
     private ComboBox<String> queriesComboBox;
@@ -75,7 +77,7 @@ public class Controller implements Initializable {
 
     @FXML
     private void executeQuery(){
-        if(!listOfQueryParameters.getSelectionModel().isEmpty() && !currencyComboBox.getSelectionModel().isEmpty() && !periodComboBox.getSelectionModel().isEmpty()) {
+        /*if(!listOfQueryParameters.getSelectionModel().isEmpty() && !currencyComboBox.getSelectionModel().isEmpty() && !periodComboBox.getSelectionModel().isEmpty()) {
             listOfData.getItems().clear();
             queryValue = listOfQueryParameters.getSelectionModel().getSelectedItem()
                          + "  " + currencyComboBox.getSelectionModel().getSelectedItem()
@@ -91,7 +93,7 @@ public class Controller implements Initializable {
             listOfData.getItems().addAll(container[0].toString());
             listOfData.getItems().addAll(container2[0].toString());
 
-        }
+        }*/
     }
 
     @FXML
@@ -140,14 +142,14 @@ public class Controller implements Initializable {
     }
 
     private void fillCurrencyComboBox(){
-        CurrencyRatesContainer[] container = api.RequestTopExchangeRates("A", 1);
+        /*CurrencyRatesContainer[] container = api.RequestTopExchangeRates("A", 1);
         CurrencyRatesContainer[] container2 = api.RequestTopExchangeRates("B", 1);
         for(int i=0; i<container[0].getRates().length; i++){
             currency.add(container[0].getRates()[i].getCode() + " - " + container[0].getRates()[i].getCurrency());
         }
         for(int i=0; i<container2[0].getRates().length; i++){
             currency.add(container2[0].getRates()[i].getCode() + " - " + container2[0].getRates()[i].getCurrency());
-        }
+        }*/
     }
 
 

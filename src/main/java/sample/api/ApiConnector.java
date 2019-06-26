@@ -7,7 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ApiConnector
+public class ApiConnector implements IApiDataProvider
 {
     // Singleton related definitions
     private ApiConnector() {}
