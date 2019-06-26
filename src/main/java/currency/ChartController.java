@@ -13,19 +13,15 @@ import java.util.ResourceBundle;
 
 public class ChartController implements Initializable {
 
-    @FXML
-    private LineChart<?, ?> LineChart;
+    @FXML private LineChart<?, ?> LineChart;
 
-    @FXML
-    private CategoryAxis x;
+    @FXML private CategoryAxis x;
 
-    @FXML
-    private NumberAxis y;
+    @FXML private NumberAxis y;
 
     private List<Double> valuesY;//= {5, 2.92, 3.96, 0.05, 6.03};
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    @Override public void initialize(URL location, ResourceBundle resources) {
         //XYChart.Series series = createSeries();
         //LineChart.getData().addAll(series);
     }
@@ -37,9 +33,10 @@ public class ChartController implements Initializable {
         return series;
     }
 
-    public void drawLineChart(List<Double> values) {
+    public void drawLineChart(List<Double> values, String name) {
         this.valuesY = values;
         XYChart.Series series = createSeries();
+        series.setName(name);
         LineChart.getData().addAll(series);
     }
 }
