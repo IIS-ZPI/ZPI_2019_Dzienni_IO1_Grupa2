@@ -2,6 +2,7 @@ package sample.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import sample.api.entities.CurrenciesTopRatesContainer;
+import sample.api.entities.CurrencyRatesContainer;
 
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -52,6 +53,7 @@ public class ApiConnector implements IApiDataProvider
         return true;
     }
 
+    @Override
     public CurrenciesTopRatesContainer[] RequestTopExchangeRates(String tableType, int topCount)
     {
         StringBuilder builder = new StringBuilder("http://api.nbp.pl/api/exchangerates/tables/");
@@ -59,7 +61,7 @@ public class ApiConnector implements IApiDataProvider
         builder.append("/last/");
         builder.append(topCount);
         builder.append("/?format=json");
-        System.out.println(builder.toString());
+
         if (!ConnectToApi(builder.toString()))
             return null;
 
@@ -69,12 +71,28 @@ public class ApiConnector implements IApiDataProvider
         return  requestResult;
     }
 
-    private <T> T[] Request(Class<T[]> classType)
+    @Override
+    public CurrencyRatesContainer RequestRatesForCurrency(String currency, String period)
+    {
+        StringBuilder builder = new StringBuilder("http://api.nbp.pl/api/exchangerates/rates/a/");
+        builder.append(currency);
+        builder.append("/");
+        builder.append(period);
+        builder.append("?format=json");
+
+        if (!ConnectToApi(builder.toString()))
+            return null;
+
+        CurrencyRatesContainer requestResult = Request(CurrencyRatesContainer.class);
+        return requestResult;
+    }
+
+    private <T> T Request(Class<T> classType)
     {
         if (!isConncected)
             return null;
 
-        T[] result = null;
+        T result = null;
 
         try
         {
@@ -101,7 +119,7 @@ public class ApiConnector implements IApiDataProvider
         isConncected = false;
     }
 
-    private <T> T[] GetJsonFileFromResponse(Class<T[]> classType)
+    private <T> T GetJsonFileFromResponse(Class<T> classType)
     {
         InputStreamReader input;
         try
@@ -116,7 +134,7 @@ public class ApiConnector implements IApiDataProvider
 
         //BufferedReader reader = new BufferedReader(input);
         ObjectMapper mapper = new ObjectMapper();
-        T[] result = null;
+        T result = null;
 
         // Debug code
         try
