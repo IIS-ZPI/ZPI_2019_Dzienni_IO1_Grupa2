@@ -57,6 +57,9 @@ public class Controller implements Initializable {
     String queryValue;
     ObservableList<String> queryValueList = FXCollections.observableArrayList();
 
+    private List<Double> chartValues;
+    private String chartTitle;
+
     @FXML public void comboBoxListener() {
         setListViewContent(queriesComboBox.getSelectionModel().getSelectedItem());
     }
@@ -66,23 +69,6 @@ public class Controller implements Initializable {
     }
 
     @FXML private void executeQuery() {
-        /*if(!listOfQueryParameters.getSelectionModel().isEmpty() && !currencyComboBox.getSelectionModel().isEmpty() && !periodComboBox.getSelectionModel().isEmpty()) {
-            listOfData.getItems().clear();
-            queryValue = listOfQueryParameters.getSelectionModel().getSelectedItem()
-                         + "  " + currencyComboBox.getSelectionModel().getSelectedItem()
-                         + " za okres " + periodComboBox.getSelectionModel().getSelectedItem();
-            queryValueList.add(queryValue);
-            listOfData.getItems().addAll(queryValueList);
-        }
-        if(listOfQueryParameters.getSelectionModel().isEmpty() && currencyComboBox.getSelectionModel().isEmpty() && periodComboBox.getSelectionModel().isEmpty()) {
-            listOfData.getItems().clear();
-            CurrenciesTopRatesContainer[] container = api.requestTopExchangeRates("A", 1);
-            CurrenciesTopRatesContainer[] container2 = api.requestTopExchangeRates("B", 1);
-            //String lines[] = string.split("\\r?\\n");
-            listOfData.getItems().addAll(container[0].toString());
-            listOfData.getItems().addAll(container2[0].toString());
-
-        }*/
         String periodString = periodComboBox.getSelectionModel().getSelectedItem();
         PeriodEnum period = setPeriod(periodString);
         String currency1 = currencyComboBox.getSelectionModel().getSelectedItem();
@@ -126,16 +112,18 @@ public class Controller implements Initializable {
         }
         if (query == parameters3.get(0)) {
             resultList = provider.getMonthlyDistributionOfChanges(currency1, currency2);
+            chartValues = resultList;
             resultType = "list";
         }
         if (query == parameters3.get(1)) {
             resultList = provider.getQuarterDistributionOfChanges(currency1, currency2);
+            chartValues = resultList;
             resultType = "list";
         }
         if (resultType == "list") {
             if (query != parameters3.get(0) && query != parameters3.get(1))
                 queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + periodString + "\nWartość:\t\t" + resultList.toString();
-            else
+            else {
                 queryValue = query
                              + " / Dla walut: "
                              + currency1
@@ -145,6 +133,8 @@ public class Controller implements Initializable {
                              + periodString
                              + "\nWartość:\t\t"
                              + resultList.toString();
+                chartTitle = query + " / Dla walut: " + currency1 + " & " + currency2 + " \nZa okres: " + periodString;
+            }
         } else if (resultType == "double") {
             queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + periodString + "\nWartość:\t\t" + resultDouble;
         } else if (resultType == "int") {
@@ -188,10 +178,14 @@ public class Controller implements Initializable {
     @FXML private void drawChart() {
         String selectedValue = listOfData.getSelectionModel().getSelectedItems().toString();
         try {
-            if(selectedValue.contains(parameters3.get(0)) || selectedValue.contains(parameters3.get(1))) {
-                Parent root1 = FXMLLoader.load(getClass().getResource("..\\line_chart.fxml"));
+            if (selectedValue.contains(parameters3.get(0)) || selectedValue.contains(parameters3.get(1))) {
+                //Parent root1 = FXMLLoader.load(getClass().getResource("..\\line_chart.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("..\\line_chart.fxml"));
+                Parent root1 = (Parent) loader.load();
+                ChartController chartController = loader.getController();
+                chartController.drawLineChart(chartValues);
                 Stage stage = new Stage();
-                stage.setTitle(queryValue);
+                stage.setTitle(chartTitle);
                 stage.setScene(new Scene(root1));
                 stage.show();
             } else {
@@ -227,7 +221,7 @@ public class Controller implements Initializable {
         currency.addAll(cr);
     }
 
-    private void showAlertWindow(){
+    private void showAlertWindow() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Błąd");
         alert.setHeaderText("Błąd podczas rysowania wykresu");
