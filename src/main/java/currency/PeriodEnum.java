@@ -1,7 +1,6 @@
-package sample;
+package currency;
 
-public enum PeriodEnum
-{
+public enum PeriodEnum {
     PERIOD_WEEK,
     PERIOD_TWO_WEEKS,
     PERIOD_MONTH,

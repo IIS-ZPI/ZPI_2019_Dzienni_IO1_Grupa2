@@ -1,9 +1,9 @@
-package sample.api;
+package currency.api;
 
 import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
-import sample.api.entities.CurrencyRatesContainer;
+import currency.api.entities.CurrencyRatesContainer;
 
 import static org.junit.Assert.assertThat;
 
@@ -15,7 +15,7 @@ public class ApiConnectorTest {
     @Before
     public void init() {
         currencyRatesContainer =
-                ApiConnector.GetJsonFileFromStringResponse(CurrencyRatesContainer[].class, getTestJson());
+                ApiConnector.getJsonFileFromStringResponse(CurrencyRatesContainer[].class, getTestJson());
     }
 
     @Test

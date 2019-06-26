@@ -1,4 +1,4 @@
-package sample.api.entities;
+package currency.api.entities;
 
 public class RatesOfCurrencyInLastPeriodContainer {
     // table type
@@ -10,29 +10,47 @@ public class RatesOfCurrencyInLastPeriodContainer {
     // Rates
     private RatesOfCurrencyInLastPeriod[] rates;
 
-    public String getTable() { return table; }
-    public void setTable(String table) { this.table = table; }
+    public String getTable() {
+        return table;
+    }
 
-    public String getCurrency() { return currency; }
-    public void setCurrency(String currency) { this.currency = currency; }
+    public void setTable(String table) {
+        this.table = table;
+    }
 
-    public String setNo() { return no; }
-    public void getNo(String effectiveDate) { this.no = no; }
+    public String getCurrency() {
+        return currency;
+    }
 
-    public RatesOfCurrencyInLastPeriod[] getRates() { return rates; }
-    public void setRates(RatesOfCurrencyInLastPeriod[] rates) { this.rates = rates; }
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String setNo() {
+        return no;
+    }
+
+    public void getNo(String effectiveDate) {
+        this.no = no;
+    }
+
+    public RatesOfCurrencyInLastPeriod[] getRates() {
+        return rates;
+    }
+
+    public void setRates(RatesOfCurrencyInLastPeriod[] rates) {
+        this.rates = rates;
+    }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(table);
         builder.append(" ");
         builder.append(currency);
         builder.append(" ");
         builder.append(no);
-        for (var rate : rates)
-        {
+        for (var rate : rates) {
             builder.append("\n");
             builder.append(rate.getCode());
             builder.append(" ");
