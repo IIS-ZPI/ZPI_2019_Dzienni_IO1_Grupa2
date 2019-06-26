@@ -7,8 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import sample.api.ApiConnector;
-import sample.api.entities.CurrencyRatesContainer;
 
 import java.util.Optional;
 

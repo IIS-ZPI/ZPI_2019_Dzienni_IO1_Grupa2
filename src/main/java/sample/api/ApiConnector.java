@@ -1,7 +1,8 @@
 package sample.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import sample.api.entities.CurrencyRatesContainer;
+import sample.api.entities.CurrenciesTopRatesContainer;
+
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -51,7 +52,7 @@ public class ApiConnector implements IApiDataProvider
         return true;
     }
 
-    public CurrencyRatesContainer[] RequestTopExchangeRates(String tableType, int topCount)
+    public CurrenciesTopRatesContainer[] RequestTopExchangeRates(String tableType, int topCount)
     {
         StringBuilder builder = new StringBuilder("http://api.nbp.pl/api/exchangerates/tables/");
         builder.append(tableType);
@@ -62,7 +63,7 @@ public class ApiConnector implements IApiDataProvider
         if (!ConnectToApi(builder.toString()))
             return null;
 
-        CurrencyRatesContainer[] requestResult = Request(CurrencyRatesContainer[].class);
+        CurrenciesTopRatesContainer[] requestResult = Request(CurrenciesTopRatesContainer[].class);
         //for (var node : requestResult)
             //System.out.println(node.toString());
         return  requestResult;

@@ -73,8 +73,8 @@ public class Controller implements Initializable {
         }
         if(listOfQueryParameters.getSelectionModel().isEmpty() && currencyComboBox.getSelectionModel().isEmpty() && periodComboBox.getSelectionModel().isEmpty()) {
             listOfData.getItems().clear();
-            CurrencyRatesContainer[] container = api.RequestTopExchangeRates("A", 1);
-            CurrencyRatesContainer[] container2 = api.RequestTopExchangeRates("B", 1);
+            CurrenciesTopRatesContainer[] container = api.RequestTopExchangeRates("A", 1);
+            CurrenciesTopRatesContainer[] container2 = api.RequestTopExchangeRates("B", 1);
             //String lines[] = string.split("\\r?\\n");
             listOfData.getItems().addAll(container[0].toString());
             listOfData.getItems().addAll(container2[0].toString());
@@ -128,8 +128,8 @@ public class Controller implements Initializable {
     }
 
     private void fillCurrencyComboBox(){
-        /*CurrencyRatesContainer[] container = api.RequestTopExchangeRates("A", 1);
-        CurrencyRatesContainer[] container2 = api.RequestTopExchangeRates("B", 1);
+        /*CurrenciesTopRatesContainer[] container = api.RequestTopExchangeRates("A", 1);
+        CurrenciesTopRatesContainer[] container2 = api.RequestTopExchangeRates("B", 1);
         for(int i=0; i<container[0].getRates().length; i++){
             currency.add(container[0].getRates()[i].getCode() + " - " + container[0].getRates()[i].getCurrency());
         }

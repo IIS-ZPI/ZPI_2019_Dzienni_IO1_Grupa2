@@ -3,32 +3,32 @@ package sample.api;
 import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
-import sample.api.entities.CurrencyRatesContainer;
+import sample.api.entities.CurrenciesTopRatesContainer;
 
 import static org.junit.Assert.assertThat;
 
 
 public class ApiConnectorTest {
 
-    private CurrencyRatesContainer[] currencyRatesContainer;
+    private CurrenciesTopRatesContainer[] currenciesTopRatesContainer;
 
     @Before
     public void init() {
-        currencyRatesContainer =
-                ApiConnector.GetJsonFileFromStringResponse(CurrencyRatesContainer[].class, getTestJson());
+        currenciesTopRatesContainer =
+                ApiConnector.GetJsonFileFromStringResponse(CurrenciesTopRatesContainer[].class, getTestJson());
     }
 
     @Test
     public void shouldHave35Rates() {
-        assertThat(currencyRatesContainer[0].getRates().length, Is.is(35));
-        assertThat(currencyRatesContainer[1].getRates().length, Is.is(35));
+        assertThat(currenciesTopRatesContainer[0].getRates().length, Is.is(35));
+        assertThat(currenciesTopRatesContainer[1].getRates().length, Is.is(35));
     }
 
     @Test
     public void position7ShouldBeEuro() {
-        assertThat(currencyRatesContainer[0].getRates()[7].getCurrency(), Is.is("euro"));
-        assertThat(currencyRatesContainer[0].getRates()[7].getCode(), Is.is("EUR"));
-        assertThat(currencyRatesContainer[0].getRates()[7].getMid(), Is.is(4.2788));
+        assertThat(currenciesTopRatesContainer[0].getRates()[7].getCurrency(), Is.is("euro"));
+        assertThat(currenciesTopRatesContainer[0].getRates()[7].getCode(), Is.is("EUR"));
+        assertThat(currenciesTopRatesContainer[0].getRates()[7].getMid(), Is.is(4.2788));
     }
 
     private String getTestJson(){

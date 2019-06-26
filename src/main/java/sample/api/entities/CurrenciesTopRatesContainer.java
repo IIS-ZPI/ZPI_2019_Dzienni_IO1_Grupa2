@@ -1,8 +1,6 @@
 package sample.api.entities;
 
-import java.util.List;
-
-public class CurrencyRatesContainer
+public class CurrenciesTopRatesContainer
 {
     // table type
     private String table;
@@ -11,7 +9,7 @@ public class CurrencyRatesContainer
     // date of obtained data
     private String effectiveDate;
     // Rates
-    private CurrencyRates[] rates;
+    private CurrencyTopRates[] rates;
 
     public String getTable() { return table; }
     public void setTable(String table) { this.table = table; }
@@ -22,8 +20,8 @@ public class CurrencyRatesContainer
     public String getEffectiveDate() { return effectiveDate; }
     public void setEffectiveDate(String effectiveDate) { this.effectiveDate = effectiveDate; }
 
-    public CurrencyRates[] getRates() { return rates; }
-    public void setRates(CurrencyRates[] rates) { this.rates = rates; }
+    public CurrencyTopRates[] getRates() { return rates; }
+    public void setRates(CurrencyTopRates[] rates) { this.rates = rates; }
 
     @Override
     public String toString()
