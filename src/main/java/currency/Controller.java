@@ -102,13 +102,13 @@ public class Controller implements Initializable {
                 result = provider.getStandardDevationOfRate(period, currency1);
             if (query == parameters2.get(3))
                 result = provider.getCoefficientOfVariationOfRate(period, currency1);
-            if (!currency2.isEmpty()) {
-                //if (query == parameters3.get(0))
+            if (!currency2.isEmpty() && query == parameters3.get(0)) {
                 //result = provider.GetMonthlyDistributionOfChanges(currency1, currency2);
-                //if (query == parameters3.get(1))
-                //result = provider.GetQuarterDistributionOfChanges(currency1, currency2);
             }
-            queryValue = query + " / Waluta: " + currency1 + " / Za okres: " + period + " - " + result;
+            if (!currency2.isEmpty() && query == parameters3.get(1)) {
+                //result = provider.getQuarterDistributionOfChanges(currency1, currency2);
+            }
+            queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + period + "\nData: MM.dd.YYYY\t\t" + result;
             queryValueList.add(queryValue);
             listOfData.getItems().addAll(queryValueList);
         }
@@ -122,7 +122,7 @@ public class Controller implements Initializable {
     }
 
     @Override public void initialize(URL url, ResourceBundle rb) {
-        fillCurrencyComboBox();
+        initCurrencyList();
         queriesComboBox.getItems().addAll(queries[0], queries[1], queries[2]);
         periodComboBox.getItems().addAll(periods);
         currencyComboBox.getItems().addAll(currency);
@@ -158,17 +158,6 @@ public class Controller implements Initializable {
 
     }
 
-    private void fillCurrencyComboBox() {
-        /*CurrencyRatesContainer[] container = api.requestTopExchangeRates("A", 1);
-        CurrencyRatesContainer[] container2 = api.requestTopExchangeRates("B", 1);
-        for(int i=0; i<container[0].getRates().length; i++){
-            currency.add(container[0].getRates()[i].getCode() + " - " + container[0].getRates()[i].getCurrency());
-        }
-        for(int i=0; i<container2[0].getRates().length; i++){
-            currency.add(container2[0].getRates()[i].getCode() + " - " + container2[0].getRates()[i].getCurrency());
-        }*/
-    }
-
     private PeriodEnum setPeriod(String s) {
         //"1 tydzień", "2 tygodnie", "1 miesiąc", "3 miesiące", "6 miesięcy", "rok"
         if (s == "1 tydzień")
@@ -185,6 +174,19 @@ public class Controller implements Initializable {
             return PeriodEnum.PERIOD_YEAR;
         else
             return null;
+    }
+
+    private void initCurrencyList(){
+        String[] cr = {"AFN","MGA","PAB","ETB","VES","BOB","CRC","SVC","NIO","GMD","MKD","DZD","BHD",
+                "IQD","JOD","KWD","LYD","RSD","TND","MAD","AED","STN","BSD","BBD","BZD","BND","FJD",
+                "GYD","JMD","LRD","NAD","SRD","TTD","XCD","SBD","VND","AMD","CVE","AWG","BIF","XOF","XAF",
+                "XPF","DJF","GNF","KMF","CDF","RWF","EGP","GIP","LBP","SSP","SDG","SYP","GHS","HTG","PYG","ANG","PGK"
+                ,"LAK","MWK","ZMW","AOA","MMK","GEL","MDL","ALL","HNL","SLL","SZL","LSL","AZN","MZN","NGN","ERN","TWD","TMT"
+                ,"MRU","TOP","MOP","ARS","DOP","COP","CUP","UYU","BWP","GTQ","IRR","YER","QAR","OMR","SAR","KHR","BYN","LKR","MVR",
+                "MUR","NPR","PKR","SCR","PEN","KGS","TJS","UZS","KES","SOS","TZS","UGX","BDT","WST","KZT","MNT","VUV","BAM","THB","USD",
+                "AUD","HKD","CAD","NZD","SGD","EUR","HUF","CHF","GBP","UAH","JPY","CZK","DKK","ISK","NOK","SEK","HRK","RON","BGN","TRY",
+                "ILS","CLP","PHP","MXN","ZAR","BRL","MYR","RUB","IDR","INR","KRW","CNY","XDR"};
+        currency.addAll(cr);
     }
 
 }
