@@ -1,4 +1,4 @@
-package sample.api.entities;
+package currency.api.entities;
 
 import java.util.List;
 

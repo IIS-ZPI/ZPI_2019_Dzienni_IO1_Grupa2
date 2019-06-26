@@ -1,22 +1,22 @@
-package sample.api;
+package currency.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import sample.api.entities.CurrenciesTopRatesContainer;
-import sample.api.entities.CurrencyRatesContainer;
+import currency.api.entities.CurrenciesTopRatesContainer;
+import currency.api.entities.CurrencyRatesContainer;
 
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ApiConnector implements IApiDataProvider
-{
+public class ApiConnector implements IApiDataProvider {
     // Singleton related definitions
-    private ApiConnector() {}
+    private ApiConnector() {
+    }
+
     private static ApiConnector Instance;
 
-    public static ApiConnector GetInstance()
-    {
+    public static ApiConnector getInstance() {
         if (Instance == null)
             Instance = new ApiConnector();
 
@@ -28,23 +28,17 @@ public class ApiConnector implements IApiDataProvider
     private URL connectionTarget;
     private boolean isConncected = false;
 
-    private boolean ConnectToApi(String urlName)
-    {
+    private boolean ConnectToApi(String urlName) {
         if (isConncected)
             return false;
 
-        try
-        {
+        try {
             connectionTarget = new URL(urlName);
-            connection = (HttpURLConnection)connectionTarget.openConnection();
-        }
-        catch (MalformedURLException malformed)
-        {
+            connection = (HttpURLConnection) connectionTarget.openConnection();
+        } catch (MalformedURLException malformed) {
             System.out.println("Blad podczas tworzenia obieku URL!");
             return false;
-        }
-        catch (java.io.IOException io)
-        {
+        } catch (java.io.IOException io) {
             System.out.println("Blad podczas uzyskiwania polaczenia!");
             return false;
         }
@@ -54,8 +48,7 @@ public class ApiConnector implements IApiDataProvider
     }
 
     @Override
-    public CurrenciesTopRatesContainer[] RequestTopExchangeRates(String tableType, int topCount)
-    {
+    public CurrenciesTopRatesContainer[] RequestTopExchangeRates(String tableType, int topCount) {
         StringBuilder builder = new StringBuilder("http://api.nbp.pl/api/exchangerates/tables/");
         builder.append(tableType);
         builder.append("/last/");
@@ -67,13 +60,12 @@ public class ApiConnector implements IApiDataProvider
 
         CurrenciesTopRatesContainer[] requestResult = Request(CurrenciesTopRatesContainer[].class);
         //for (var node : requestResult)
-            //System.out.println(node.toString());
-        return  requestResult;
+        //System.out.println(node.toString());
+        return requestResult;
     }
 
     @Override
-    public CurrencyRatesContainer RequestRatesForCurrency(String currency, String period)
-    {
+    public CurrencyRatesContainer RequestRatesForCurrency(String currency, String period) {
         StringBuilder builder = new StringBuilder("http://api.nbp.pl/api/exchangerates/rates/a/");
         builder.append(currency);
         builder.append("/");
@@ -87,23 +79,19 @@ public class ApiConnector implements IApiDataProvider
         return requestResult;
     }
 
-    private <T> T Request(Class<T> classType)
-    {
+    private <T> T Request(Class<T> classType) {
         if (!isConncected)
             return null;
 
         T result = null;
 
-        try
-        {
+        try {
             connection.setRequestMethod("GET");
             connection.connect();
 
             if (connection.getResponseCode() == 200)
                 result = GetJsonFileFromResponse(classType);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Blad podczas pobierania danych z api!");
         }
 
@@ -111,23 +99,18 @@ public class ApiConnector implements IApiDataProvider
         return result;
     }
 
-    private void CloseConnection()
-    {
+    private void CloseConnection() {
         connection.disconnect();
         connection = null;
         connectionTarget = null;
         isConncected = false;
     }
 
-    private <T> T GetJsonFileFromResponse(Class<T> classType)
-    {
+    private <T> T GetJsonFileFromResponse(Class<T> classType) {
         InputStreamReader input;
-        try
-        {
+        try {
             input = new InputStreamReader(connection.getInputStream());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Blad podczas uzyskiwania strumienia danych!");
             return null;
         }
@@ -137,13 +120,10 @@ public class ApiConnector implements IApiDataProvider
         T result = null;
 
         // Debug code
-        try
-        {
-            result =  mapper.readValue(input, classType);
+        try {
+            result = mapper.readValue(input, classType);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Blad podczas mapowania obiektu!");
             return null;
@@ -152,17 +132,13 @@ public class ApiConnector implements IApiDataProvider
         return result;
     }
 
-    public static <T> T[] GetJsonFileFromStringResponse(Class<T[]> classType, String jsonString)
-    {
+    public static <T> T[] GetJsonFileFromStringResponse(Class<T[]> classType, String jsonString) {
         ObjectMapper mapper = new ObjectMapper();
         T[] result = null;
 
-        try
-        {
+        try {
             result = mapper.readValue(jsonString, classType);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Blad podczas mapowania obiektu!");
         }

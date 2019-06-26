@@ -1,11 +1,11 @@
-package sample.data_providers;
+package currency.data_providers;
 
-import sample.PeriodEnum;
-import sample.api.ApiConnectorFactory;
-import sample.api.IApiDataProvider;
-import sample.api.entities.CurrencyRate;
-import sample.api.entities.CurrencyRatesContainer;
-import sample.math.Statistic;
+import currency.PeriodEnum;
+import currency.api.ApiConnectorFactory;
+import currency.math.Statistic;
+import currency.api.IApiDataProvider;
+import currency.api.entities.CurrencyRate;
+import currency.api.entities.CurrencyRatesContainer;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,14 +15,14 @@ public class DataProvider implements IDataProvider {
     private IApiDataProvider apiDataProvider;
 
     DataProvider() {
-        apiDataProvider = ApiConnectorFactory.GetDefaultConnector();
+        apiDataProvider = ApiConnectorFactory.getDefaultConnector();
     }
 
     @Override
-    public String GetDateStringForPeriod(PeriodEnum period) {
+    public String getDateStringForPeriod(PeriodEnum period) {
         StringBuilder builder = new StringBuilder("/");
         LocalDateTime dateTime = LocalDateTime.now();
-        String currentTime = GetDateStringFromDate(dateTime);
+        String currentTime = getDateStringFromDate(dateTime);
         long daysToDecrease = 0;
         long monthsToDecrease = 0;
         long yearsToDecrease = 0;
@@ -52,7 +52,7 @@ public class DataProvider implements IDataProvider {
         dateTime = dateTime.minusMonths(monthsToDecrease);
         dateTime = dateTime.minusYears(yearsToDecrease);
 
-        builder.append(GetDateStringFromDate(dateTime));
+        builder.append(getDateStringFromDate(dateTime));
         builder.append("/");
         builder.append(currentTime);
         builder.append("/");
@@ -60,7 +60,7 @@ public class DataProvider implements IDataProvider {
         return builder.toString();
     }
 
-    private String GetDateStringFromDate(LocalDateTime time) {
+    private String getDateStringFromDate(LocalDateTime time) {
         StringBuilder builder = new StringBuilder();
         builder.append(time.getYear());
         builder.append("-");
@@ -71,8 +71,8 @@ public class DataProvider implements IDataProvider {
     }
 
     @Override
-    public int GetSessionIncreaseAmount(PeriodEnum period, String currency) {
-        String periodStr = GetDateStringForPeriod(period);
+    public int getSessionIncreaseAmount(PeriodEnum period, String currency) {
+        String periodStr = getDateStringForPeriod(period);
         CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
         if (container == null)
             return 0;
@@ -96,8 +96,8 @@ public class DataProvider implements IDataProvider {
     }
 
     @Override
-    public int GetSessionDecreaseAmount(PeriodEnum period, String currency) {
-        String periodStr = GetDateStringForPeriod(period);
+    public int getSessionDecreaseAmount(PeriodEnum period, String currency) {
+        String periodStr = getDateStringForPeriod(period);
         CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
         if (container == null)
             return 0;
@@ -121,8 +121,8 @@ public class DataProvider implements IDataProvider {
     }
 
     @Override
-    public int GetSessionWithoutChangeAmount(PeriodEnum period, String currency) {
-        String periodStr = GetDateStringForPeriod(period);
+    public int getSessionWithoutChangeAmount(PeriodEnum period, String currency) {
+        String periodStr = getDateStringForPeriod(period);
         CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
         if (container == null)
             return 0;
@@ -146,7 +146,7 @@ public class DataProvider implements IDataProvider {
     }
 
     private double[] GetValuesListForRate(PeriodEnum period, String currency) {
-        String periodStr = GetDateStringForPeriod(period);
+        String periodStr = getDateStringForPeriod(period);
         CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
         if (container == null)
             return null;
@@ -159,7 +159,7 @@ public class DataProvider implements IDataProvider {
     }
 
     @Override
-    public double GetMedianOfRate(PeriodEnum period, String currency) {
+    public double getMedianOfRate(PeriodEnum period, String currency) {
         double[] listOfValues = GetValuesListForRate(period, currency);
         if (listOfValues == null)
             return 0.0f;
@@ -167,7 +167,7 @@ public class DataProvider implements IDataProvider {
     }
 
     @Override
-    public List<Double> GetDominantOfRate(PeriodEnum period, String currency) {
+    public List<Double> getDominantOfRate(PeriodEnum period, String currency) {
         double[] listOfValues = GetValuesListForRate(period, currency);
         if (listOfValues == null)
             return new ArrayList<>();
@@ -176,29 +176,29 @@ public class DataProvider implements IDataProvider {
     }
 
     @Override
-    public double GetStandardDevationOfRate(PeriodEnum period, String currency) {
+    public double getStandardDevationOfRate(PeriodEnum period, String currency) {
         double[] listOfValues = GetValuesListForRate(period, currency);
         return Statistic.standardDeviation(listOfValues);
     }
 
     @Override
-    public double GetCoefficientOfVariationOfRate(PeriodEnum period, String currency) {
+    public double getCoefficientOfVariationOfRate(PeriodEnum period, String currency) {
         double[] lisOfValues = GetValuesListForRate(period, currency);
         return Statistic.coefficientOfVariation(lisOfValues);
     }
 
     @Override
-    public List<Double> GetMonthlyDistributionOfChanges(String currencyOne, String currencyTwo) {
-        return GetDistributionChanges(PeriodEnum.PERIOD_MONTH, currencyOne, currencyTwo);
+    public List<Double> getMonthlyDistributionOfChanges(String currencyOne, String currencyTwo) {
+        return getDistributionChanges(PeriodEnum.PERIOD_MONTH, currencyOne, currencyTwo);
     }
 
     @Override
-    public List<Double> GetQuarterDistributionOfChanges(String currencyOne, String currencyTwo) {
-        return GetDistributionChanges(PeriodEnum.PERIOD_QUARTER, currencyOne, currencyTwo);
+    public List<Double> getQuarterDistributionOfChanges(String currencyOne, String currencyTwo) {
+        return getDistributionChanges(PeriodEnum.PERIOD_QUARTER, currencyOne, currencyTwo);
     }
 
-    private List<Double> GetDistributionChanges(PeriodEnum periodEnum, String currencyOne, String currencyTwo) {
-        String period = GetDateStringForPeriod(PeriodEnum.PERIOD_MONTH);
+    private List<Double> getDistributionChanges(PeriodEnum periodEnum, String currencyOne, String currencyTwo) {
+        String period = getDateStringForPeriod(PeriodEnum.PERIOD_MONTH);
         CurrencyRatesContainer containerOne = apiDataProvider.RequestRatesForCurrency(currencyOne, period);
         CurrencyRatesContainer containerTwo = apiDataProvider.RequestRatesForCurrency(currencyTwo, period);
 

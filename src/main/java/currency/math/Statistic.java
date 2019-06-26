@@ -1,4 +1,4 @@
-package sample.math;
+package currency.math;
 
 import java.util.*;
 
