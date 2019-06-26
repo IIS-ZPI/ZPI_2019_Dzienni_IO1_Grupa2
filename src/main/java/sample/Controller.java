@@ -32,8 +32,8 @@ public class Controller implements Initializable {
     @FXML
     private ComboBox<String> queriesComboBox;
     String[] queries = {"Ilość sesji wzrostowych, spadkowych i bez zmian",
-                    "Miary statystyczne(mediana, dominanta, odchylenie standardowe, współczynnik zmienności",
-                    "Rozkład zmian miesięcznych i kwartalnych dla par walutowych"};
+            "Miary statystyczne(mediana, dominanta, odchylenie standardowe, współczynnik zmienności",
+            "Rozkład zmian miesięcznych i kwartalnych dla par walutowych"};
     @FXML
     private ComboBox<String> currencyComboBox;
     ObservableList<String> currency = FXCollections.observableArrayList();
@@ -71,12 +71,12 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void exit(){
+    private void exit() {
         System.exit(0);
     }
 
     @FXML
-    private void executeQuery(){
+    private void executeQuery() {
         /*if(!listOfQueryParameters.getSelectionModel().isEmpty() && !currencyComboBox.getSelectionModel().isEmpty() && !periodComboBox.getSelectionModel().isEmpty()) {
             listOfData.getItems().clear();
             queryValue = listOfQueryParameters.getSelectionModel().getSelectedItem()
@@ -97,7 +97,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void clearList(){
+    private void clearList() {
         queryValueList.clear();
         listOfData.getItems().clear();
         listOfData.getItems().addAll(queryValueList);
@@ -111,21 +111,21 @@ public class Controller implements Initializable {
         currencyComboBox.getItems().addAll(currency);
     }
 
-    private void setListViewContent(String query){
+    private void setListViewContent(String query) {
         listOfQueryParameters.getItems().clear();
 
-        if(query == queries[0])
+        if (query == queries[0])
             listOfQueryParameters.getItems().addAll(parameters1);
 
-        if(query == queries[1])
+        if (query == queries[1])
             listOfQueryParameters.getItems().addAll(parameters2);
 
-        if(query == queries[2])
+        if (query == queries[2])
             listOfQueryParameters.getItems().addAll(parameters3);
     }
 
     @FXML
-    private void drawChart(){
+    private void drawChart() {
         /*
         try {
             Parent root = new FXMLLoader().load(getClass().getResource("..\\line_chart.fxml"));
@@ -141,7 +141,7 @@ public class Controller implements Initializable {
         */
     }
 
-    private void fillCurrencyComboBox(){
+    private void fillCurrencyComboBox() {
         /*CurrencyRatesContainer[] container = api.RequestTopExchangeRates("A", 1);
         CurrencyRatesContainer[] container2 = api.RequestTopExchangeRates("B", 1);
         for(int i=0; i<container[0].getRates().length; i++){

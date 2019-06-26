@@ -4,12 +4,10 @@ import sample.PeriodEnum;
 import sample.api.ApiConnectorFactory;
 import sample.api.IApiDataProvider;
 
-public class DataProvider implements IDataProvider
-{
+public class DataProvider implements IDataProvider {
     private IApiDataProvider apiDataProvider;
 
-    public DataProvider()
-    {
+    public DataProvider() {
         apiDataProvider = ApiConnectorFactory.GetDefaultConnector();
     }
 

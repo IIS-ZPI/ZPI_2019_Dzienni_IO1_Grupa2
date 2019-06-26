@@ -1,7 +1,6 @@
 package sample.api.entities;
 
-public class CurrencyRates
-{
+public class CurrencyRates {
     // name of currency
     private String currency;
     // currency code name

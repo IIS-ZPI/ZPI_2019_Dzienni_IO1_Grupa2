@@ -8,7 +8,6 @@ public class RatesOfCurrencyInLastPeriod {
     // rates
     private double mid;
 
-
     public String getCode() {
         return code;
     }
