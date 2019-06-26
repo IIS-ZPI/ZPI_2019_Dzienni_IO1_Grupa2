@@ -20,8 +20,8 @@ public class ApiConnectorTest {
 
     @Test
     public void shouldHave35Rates() {
-        assertThat(currencyRatesContainer[0].getRates().length, Is.is(35));
-        assertThat(currencyRatesContainer[1].getRates().length, Is.is(35));
+        assertThat(currencyRatesContainer[0].getRates().length, Is.is(31));
+        assertThat(currencyRatesContainer[1].getRates().length, Is.is(31));
     }
 
     @Test
