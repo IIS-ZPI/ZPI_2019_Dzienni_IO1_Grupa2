@@ -145,8 +145,7 @@ public class DataProvider implements IDataProvider {
         return amount;
     }
 
-    private double[] GetValuesListForRate(PeriodEnum period, String currency)
-    {
+    private double[] GetValuesListForRate(PeriodEnum period, String currency) {
         String periodStr = GetDateStringForPeriod(period);
         CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
         if (container == null)
@@ -198,8 +197,7 @@ public class DataProvider implements IDataProvider {
         return GetDistributionChanges(PeriodEnum.PERIOD_QUARTER, currencyOne, currencyTwo);
     }
 
-    private List<Double> GetDistributionChanges(PeriodEnum periodEnum, String currencyOne, String currencyTwo)
-    {
+    private List<Double> GetDistributionChanges(PeriodEnum periodEnum, String currencyOne, String currencyTwo) {
         String period = GetDateStringForPeriod(PeriodEnum.PERIOD_MONTH);
         CurrencyRatesContainer containerOne = apiDataProvider.RequestRatesForCurrency(currencyOne, period);
         CurrencyRatesContainer containerTwo = apiDataProvider.RequestRatesForCurrency(currencyTwo, period);
@@ -218,8 +216,7 @@ public class DataProvider implements IDataProvider {
         int i = 1;
         int j = 1;
 
-        while (i < ratesOne.size() && j < ratesTwo.size())
-        {
+        while (i < ratesOne.size() && j < ratesTwo.size()) {
             double sum = ratesOne.get(i).getMid() + ratesOne.get(j).getMid();
             double change = sum - lastSum;
             lastSum = sum;
