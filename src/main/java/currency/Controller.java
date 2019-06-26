@@ -95,7 +95,8 @@ public class Controller implements Initializable {
             listOfData.getItems().addAll(container2[0].toString());
 
         }*/
-        PeriodEnum period = setPeriod(periodComboBox.getSelectionModel().getSelectedItem());
+        String periodString = periodComboBox.getSelectionModel().getSelectedItem();
+        PeriodEnum period = setPeriod(periodString);
         String currency1 = currencyComboBox.getSelectionModel().getSelectedItem();
         String currency2 = currencyComboBox2.getSelectionModel().getSelectedItem();
         String query = listOfQueryParameters.getSelectionModel().getSelectedItem();
@@ -145,11 +146,11 @@ public class Controller implements Initializable {
                 resultType = "list";
             }
             if(resultType == "list") {
-                queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + period + "\nData: MM.dd.YYYY\t\t" + resultList.toString();
+                queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + periodString + "\nWartość:\t\t" + resultList.toString();
             } else if(resultType == "double"){
-                queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + period + "\nData: MM.dd.YYYY\t\t" + resultDouble;
+                queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + periodString + "\nWartość:\t\t" + resultDouble;
             } else if(resultType == "int"){
-                queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + period + "\nData: MM.dd.YYYY\t\t" + resultInt;
+                queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + periodString + "\nWartość:\t\t" + resultInt;
             }
             queryValueList.add(queryValue);
             listOfData.getItems().addAll(queryValueList);
