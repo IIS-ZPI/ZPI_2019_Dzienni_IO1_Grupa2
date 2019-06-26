@@ -1,18 +1,18 @@
-package sample;
+package currency;
 
-
+import currency.data_providers.DataProviderFactory;
+import currency.data_providers.IDataProvider;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import currency.data_providers.DataProviderFactory;
-import currency.data_providers.IDataProvider;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,54 +22,46 @@ public class Controller implements Initializable {
 
     IDataProvider provider = DataProviderFactory.GetDefaultDataProvider();
 
-    @FXML
-    private ComboBox<String> queriesComboBox;
+    @FXML private ComboBox<String> queriesComboBox;
     String[] queries = {"Ilość sesji wzrostowych, spadkowych i bez zmian",
             "Miary statystyczne(mediana, dominanta, odchylenie standardowe, współczynnik zmienności",
             "Rozkład zmian miesięcznych i kwartalnych dla par walutowych"};
-    @FXML
-    private ComboBox<String> currencyComboBox;
+    @FXML private ComboBox<String> currencyComboBox;
     ObservableList<String> currency = FXCollections.observableArrayList();
 
-    @FXML
-    private ComboBox<String> periodComboBox;
-    ObservableList<String> periods = FXCollections.observableArrayList("1 tydzień", "2 tygodnie", "1 miesiąc", "3 miesiące", "6 miesięcy", "rok");
+    @FXML private ComboBox<String> currencyComboBox2;
 
-    @FXML
-    private Button executeButton;
+    @FXML private ComboBox<String> periodComboBox;
+    ObservableList<String> periods = FXCollections.observableArrayList("1 tydzień", "2 tygodnie", "1 miesiąc", "3 miesiące", "6 miesięcy",
+            "rok");
 
-    @FXML
-    private Button clearListButton;
+    @FXML private Button executeButton;
 
-    @FXML
-    private Button exitButton;
+    @FXML private Button clearListButton;
 
-    @FXML
-    private Button drawChartButton;
+    @FXML private Button exitButton;
 
-    @FXML
-    private ListView<String> listOfQueryParameters;
+    @FXML private Button drawChartButton;
+
+    @FXML private ListView<String> listOfQueryParameters;
     ObservableList<String> parameters1 = FXCollections.observableArrayList("Sesje wzrostowe", "Sesje spadkowe", "Sesje bez zmian");
-    ObservableList<String> parameters2 = FXCollections.observableArrayList("Mediana", "Dominanta", "Odchylenie standardowe", "Współczynnik zmienności");
+    ObservableList<String> parameters2 = FXCollections.observableArrayList("Mediana", "Dominanta", "Odchylenie standardowe",
+            "Współczynnik zmienności");
     ObservableList<String> parameters3 = FXCollections.observableArrayList("Rozkład zmian miesięcznych", "Rozklad zmian kwartalnych");
 
-    @FXML
-    private ListView<String> listOfData;
+    @FXML private ListView<String> listOfData;
     String queryValue;
     ObservableList<String> queryValueList = FXCollections.observableArrayList();
 
-    @FXML
-    public void comboBoxListener() {
+    @FXML public void comboBoxListener() {
         setListViewContent(queriesComboBox.getSelectionModel().getSelectedItem());
     }
 
-    @FXML
-    private void exit() {
+    @FXML private void exit() {
         System.exit(0);
     }
 
-    @FXML
-    private void executeQuery() {
+    @FXML private void executeQuery() {
         /*if(!listOfQueryParameters.getSelectionModel().isEmpty() && !currencyComboBox.getSelectionModel().isEmpty() && !periodComboBox.getSelectionModel().isEmpty()) {
             listOfData.getItems().clear();
             queryValue = listOfQueryParameters.getSelectionModel().getSelectedItem()
@@ -92,29 +84,29 @@ public class Controller implements Initializable {
         String currency2 = currencyComboBox2.getSelectionModel().getSelectedItem();
         String query = listOfQueryParameters.getSelectionModel().getSelectedItem();
         double result = -999;
-        if(!query.isEmpty() && !currency1.isEmpty() && !periodComboBox.getSelectionModel().getSelectedItem().isEmpty()){
+        if (!query.isEmpty() && !currency1.isEmpty() && !periodComboBox.getSelectionModel().getSelectedItem().isEmpty()) {
 
             listOfData.getItems().clear();
 
-            if(query == parameters1.get(0))
-                result = provider.GetSessionIncreaseAmount(period, currency1);
-            if(query == parameters1.get(1))
-                result = provider.GetSessionDecreaseAmount(period, currency1);
-            if(query == parameters1.get(2))
-                result = provider.GetSessionWithoutChangeAmount(period, currency1);
-            if(query == parameters2.get(0))
-                result = provider.GetMedianOfRate(period, currency1);
-            if(query == parameters2.get(1))
-                result = provider.GetDominantOfRate(period,currency1);
-            if(query == parameters2.get(2))
-                result = provider.GetStandardDevationOfRate(period, currency1);
-            if(query == parameters2.get(3))
-                result = provider.GetCoefficientOfVariationOfRate(period, currency1);
-            if(!currency2.isEmpty()) {
+            if (query == parameters1.get(0))
+                result = provider.getSessionIncreaseAmount(period, currency1);
+            if (query == parameters1.get(1))
+                result = provider.getSessionDecreaseAmount(period, currency1);
+            if (query == parameters1.get(2))
+                result = provider.getSessionWithoutChangeAmount(period, currency1);
+            if (query == parameters2.get(0))
+                result = provider.getMedianOfRate(period, currency1);
+            if (query == parameters2.get(1))
+                result = provider.getDominantOfRate(period, currency1);
+            if (query == parameters2.get(2))
+                result = provider.getStandardDevationOfRate(period, currency1);
+            if (query == parameters2.get(3))
+                result = provider.getCoefficientOfVariationOfRate(period, currency1);
+            if (!currency2.isEmpty()) {
                 //if (query == parameters3.get(0))
-                    //result = provider.GetMonthlyDistributionOfChanges(currency1, currency2);
+                //result = provider.GetMonthlyDistributionOfChanges(currency1, currency2);
                 //if (query == parameters3.get(1))
-                    //result = provider.GetQuarterDistributionOfChanges(currency1, currency2);
+                //result = provider.GetQuarterDistributionOfChanges(currency1, currency2);
             }
             queryValue = query + " / Waluta: " + currency1 + " / Za okres: " + period + " - " + result;
             queryValueList.add(queryValue);
@@ -123,15 +115,13 @@ public class Controller implements Initializable {
 
     }
 
-    @FXML
-    private void clearList() {
+    @FXML private void clearList() {
         queryValueList.clear();
         listOfData.getItems().clear();
         listOfData.getItems().addAll(queryValueList);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    @Override public void initialize(URL url, ResourceBundle rb) {
         fillCurrencyComboBox();
         queriesComboBox.getItems().addAll(queries[0], queries[1], queries[2]);
         periodComboBox.getItems().addAll(periods);
@@ -152,8 +142,7 @@ public class Controller implements Initializable {
             listOfQueryParameters.getItems().addAll(parameters3);
     }
 
-    @FXML
-    private void drawChart(){
+    @FXML private void drawChart() {
 
         try {
             Parent root1 = FXMLLoader.load(getClass().getResource("..\\line_chart.fxml"));
@@ -179,23 +168,23 @@ public class Controller implements Initializable {
             currency.add(container2[0].getRates()[i].getCode() + " - " + container2[0].getRates()[i].getCurrency());
         }*/
     }
-    private PeriodEnum setPeriod(String s){
+
+    private PeriodEnum setPeriod(String s) {
         //"1 tydzień", "2 tygodnie", "1 miesiąc", "3 miesiące", "6 miesięcy", "rok"
-        if(s == "1 tydzień")
+        if (s == "1 tydzień")
             return PeriodEnum.PERIOD_WEEK;
-        if(s == "2 tygodnie")
+        if (s == "2 tygodnie")
             return PeriodEnum.PERIOD_TWO_WEEKS;
-        if(s == "1 miesiąc")
+        if (s == "1 miesiąc")
             return PeriodEnum.PERIOD_MONTH;
-        if(s == "3 miesiące")
+        if (s == "3 miesiące")
             return PeriodEnum.PERIOD_QUARTER;
-        if(s == "6 miesięcy")
+        if (s == "6 miesięcy")
             return PeriodEnum.PERIOD_HALF_OF_YEAR;
-        if(s == "rok")
+        if (s == "rok")
             return PeriodEnum.PERIOD_YEAR;
         else
             return null;
     }
-
 
 }
