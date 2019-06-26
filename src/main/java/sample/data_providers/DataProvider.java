@@ -189,12 +189,45 @@ public class DataProvider implements IDataProvider {
     }
 
     @Override
-    public void GetMonthlyDistributionOfChanges(String currencyOne, String currencyTwo) {
-
+    public List<Double> GetMonthlyDistributionOfChanges(String currencyOne, String currencyTwo) {
+        return GetDistributionChanges(PeriodEnum.PERIOD_MONTH, currencyOne, currencyTwo);
     }
 
     @Override
-    public void GetQuarterDistributionOfChanges(String currencyOne, String currencyTwo) {
+    public List<Double> GetQuarterDistributionOfChanges(String currencyOne, String currencyTwo) {
+        return GetDistributionChanges(PeriodEnum.PERIOD_QUARTER, currencyOne, currencyTwo);
+    }
 
+    private List<Double> GetDistributionChanges(PeriodEnum periodEnum, String currencyOne, String currencyTwo)
+    {
+        String period = GetDateStringForPeriod(PeriodEnum.PERIOD_MONTH);
+        CurrencyRatesContainer containerOne = apiDataProvider.RequestRatesForCurrency(currencyOne, period);
+        CurrencyRatesContainer containerTwo = apiDataProvider.RequestRatesForCurrency(currencyTwo, period);
+
+        if (containerOne == null || containerTwo == null)
+            return new ArrayList<>();
+
+        if (containerOne.getRates().size() == 0 || containerTwo.getRates().size() == 0)
+            return new ArrayList<>();
+
+        ArrayList<Double> result = new ArrayList<>();
+        List<CurrencyRate> ratesOne = containerOne.getRates();
+        List<CurrencyRate> ratesTwo = containerTwo.getRates();
+
+        double lastSum = ratesOne.get(0).getMid() + ratesTwo.get(0).getMid();
+        int i = 1;
+        int j = 1;
+
+        while (i < ratesOne.size() && j < ratesTwo.size())
+        {
+            double sum = ratesOne.get(i).getMid() + ratesOne.get(j).getMid();
+            double change = sum - lastSum;
+            lastSum = sum;
+            result.add(change);
+            ++i;
+            ++j;
+        }
+
+        return result;
     }
 }

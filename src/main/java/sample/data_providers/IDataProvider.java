@@ -17,6 +17,6 @@ public interface IDataProvider
     double GetStandardDevationOfRate(PeriodEnum period, String currency);
     double GetCoefficientOfVariationOfRate(PeriodEnum period, String currency);
 
-    void GetMonthlyDistributionOfChanges(String currencyOne, String currencyTwo);
-    void GetQuarterDistributionOfChanges(String currencyOne, String currencyTwo);
+    List<Double> GetMonthlyDistributionOfChanges(String currencyOne, String currencyTwo);
+    List<Double> GetQuarterDistributionOfChanges(String currencyOne, String currencyTwo);
 }
