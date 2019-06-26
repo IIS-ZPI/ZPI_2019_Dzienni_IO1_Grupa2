@@ -9,18 +9,15 @@ import sample.api.entities.CurrencyRatesContainer;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class DataProvider implements IDataProvider
-{
+public class DataProvider implements IDataProvider {
     private IApiDataProvider apiDataProvider;
 
-    DataProvider()
-    {
+    DataProvider() {
         apiDataProvider = ApiConnectorFactory.GetDefaultConnector();
     }
 
     @Override
-    public String GetDateStringForPeriod(PeriodEnum period)
-    {
+    public String GetDateStringForPeriod(PeriodEnum period) {
         StringBuilder builder = new StringBuilder("/");
         LocalDateTime dateTime = LocalDateTime.now();
         String currentTime = GetDateStringFromDate(dateTime);
@@ -28,8 +25,7 @@ public class DataProvider implements IDataProvider
         long monthsToDecrease = 0;
         long yearsToDecrease = 0;
 
-        switch (period)
-        {
+        switch (period) {
             case PERIOD_WEEK:
                 daysToDecrease = 7;
                 break;
@@ -62,8 +58,7 @@ public class DataProvider implements IDataProvider
         return builder.toString();
     }
 
-    private String GetDateStringFromDate(LocalDateTime time)
-    {
+    private String GetDateStringFromDate(LocalDateTime time) {
         StringBuilder builder = new StringBuilder();
         builder.append(time.getYear());
         builder.append("-");
@@ -74,10 +69,12 @@ public class DataProvider implements IDataProvider
     }
 
     @Override
-    public int GetSessionIncreaseAmount(PeriodEnum period, String currency)
-    {
+    public int GetSessionIncreaseAmount(PeriodEnum period, String currency) {
         String periodStr = GetDateStringForPeriod(period);
         CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
+        if (container == null)
+            return 0;
+
         int amount = 0;
         double lastValue = 0;
         List<CurrencyRate> list = container.getRates();
@@ -85,8 +82,7 @@ public class DataProvider implements IDataProvider
         if (list.size() > 0)
             lastValue = list.get(0).getMid();
 
-        for (int i = 1; i < list.size(); ++i)
-        {
+        for (int i = 1; i < list.size(); ++i) {
             double val = list.get(i).getMid();
             if (val > lastValue)
                 ++amount;
@@ -98,10 +94,12 @@ public class DataProvider implements IDataProvider
     }
 
     @Override
-    public int GetSessionDecreaseAmount(PeriodEnum period, String currency)
-    {
+    public int GetSessionDecreaseAmount(PeriodEnum period, String currency) {
         String periodStr = GetDateStringForPeriod(period);
         CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
+        if (container == null)
+            return 0;
+
         int amount = 0;
         double lastValue = 0;
         List<CurrencyRate> list = container.getRates();
@@ -109,8 +107,7 @@ public class DataProvider implements IDataProvider
         if (list.size() > 0)
             lastValue = list.get(0).getMid();
 
-        for (int i = 1; i < list.size(); ++i)
-        {
+        for (int i = 1; i < list.size(); ++i) {
             double val = list.get(i).getMid();
             if (val < lastValue)
                 ++amount;
@@ -122,10 +119,12 @@ public class DataProvider implements IDataProvider
     }
 
     @Override
-    public int GetSessionWithoutChangeAmount(PeriodEnum period, String currency)
-    {
+    public int GetSessionWithoutChangeAmount(PeriodEnum period, String currency) {
         String periodStr = GetDateStringForPeriod(period);
         CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
+        if (container == null)
+            return 0;
+
         int amount = 0;
         double lastValue = 0;
         List<CurrencyRate> list = container.getRates();
@@ -133,8 +132,7 @@ public class DataProvider implements IDataProvider
         if (list.size() > 0)
             lastValue = list.get(0).getMid();
 
-        for (int i = 1; i < list.size(); ++i)
-        {
+        for (int i = 1; i < list.size(); ++i) {
             double val = list.get(i).getMid();
             if (val == lastValue)
                 ++amount;
