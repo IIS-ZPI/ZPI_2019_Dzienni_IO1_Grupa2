@@ -3,8 +3,11 @@ package sample.data_providers;
 import sample.PeriodEnum;
 import sample.api.ApiConnectorFactory;
 import sample.api.IApiDataProvider;
+import sample.api.entities.CurrencyRate;
+import sample.api.entities.CurrencyRatesContainer;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class DataProvider implements IDataProvider
 {
@@ -72,8 +75,25 @@ public class DataProvider implements IDataProvider
 
     @Override
     public int GetSessionIncreaseAmount(PeriodEnum period, String currency) {
+        String periodStr = GetDateStringForPeriod(period);
+        CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
+        int amount = 0;
+        double lastValue = 0;
+        List<CurrencyRate> list = container.getRates();
 
-        return 0;
+        if (list.size() > 0)
+            lastValue = list.get(0).getMid();
+
+        for (int i = 1; i < list.size(); ++i)
+        {
+            double val = list.get(i).getMid();
+            if (val > lastValue)
+                ++amount;
+
+            lastValue = val;
+        }
+
+        return amount;
     }
 
     @Override
