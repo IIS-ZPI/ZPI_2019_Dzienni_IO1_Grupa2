@@ -9,25 +9,26 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ApiConnector implements IApiDataProvider {
-    // Singleton related definitions
-    private ApiConnector() {
-    }
-
-    private static ApiConnector Instance;
-
-    public static ApiConnector GetInstance() {
-        if (Instance == null)
-            Instance = new ApiConnector();
-
-        return Instance;
-    }
 
     // Class functionality
     private HttpURLConnection connection;
     private URL connectionTarget;
     private boolean isConncected = false;
 
-    private boolean ConnectToApi(String urlName) {
+    // Singleton related definitions
+    private ApiConnector() {
+    }
+
+    private static ApiConnector Instance;
+
+    public static ApiConnector getInstance() {
+        if (Instance == null)
+            Instance = new ApiConnector();
+
+        return Instance;
+    }
+
+    private boolean connectToApi(String urlName) {
         if (isConncected)
             return false;
 
@@ -46,23 +47,23 @@ public class ApiConnector implements IApiDataProvider {
         return true;
     }
 
-    public CurrencyRatesContainer[] RequestTopExchangeRates(String tableType, int topCount) {
+    public CurrencyRatesContainer[] requestTopExchangeRates(String tableType, int topCount) {
         StringBuilder builder = new StringBuilder("http://api.nbp.pl/api/exchangerates/tables/");
         builder.append(tableType);
         builder.append("/last/");
         builder.append(topCount);
         builder.append("/?format=json");
         System.out.println(builder.toString());
-        if (!ConnectToApi(builder.toString()))
+        if (!connectToApi(builder.toString()))
             return null;
 
-        CurrencyRatesContainer[] requestResult = Request(CurrencyRatesContainer[].class);
+        CurrencyRatesContainer[] requestResult = request(CurrencyRatesContainer[].class);
         //for (var node : requestResult)
         //System.out.println(node.toString());
         return requestResult;
     }
 
-    private <T> T[] Request(Class<T[]> classType) {
+    private <T> T[] request(Class<T[]> classType) {
         if (!isConncected)
             return null;
 
@@ -73,23 +74,23 @@ public class ApiConnector implements IApiDataProvider {
             connection.connect();
 
             if (connection.getResponseCode() == 200)
-                result = GetJsonFileFromResponse(classType);
+                result = getJsonFileFromResponse(classType);
         } catch (Exception e) {
             System.out.println("Blad podczas pobierania danych z api!");
         }
 
-        CloseConnection();
+        closeConnection();
         return result;
     }
 
-    private void CloseConnection() {
+    private void closeConnection() {
         connection.disconnect();
         connection = null;
         connectionTarget = null;
         isConncected = false;
     }
 
-    private <T> T[] GetJsonFileFromResponse(Class<T[]> classType) {
+    private <T> T[] getJsonFileFromResponse(Class<T[]> classType) {
         InputStreamReader input;
         try {
             input = new InputStreamReader(connection.getInputStream());
@@ -115,7 +116,7 @@ public class ApiConnector implements IApiDataProvider {
         return result;
     }
 
-    public static <T> T[] GetJsonFileFromStringResponse(Class<T[]> classType, String jsonString) {
+    public static <T> T[] getJsonFileFromStringResponse(Class<T[]> classType, String jsonString) {
         ObjectMapper mapper = new ObjectMapper();
         T[] result = null;
 
@@ -128,4 +129,5 @@ public class ApiConnector implements IApiDataProvider {
 
         return result;
     }
+    
 }

@@ -3,21 +3,23 @@ package currency.data_providers;
 import currency.PeriodEnum;
 
 public interface IDataProvider {
-    int GetSessionIncreaseAmount(PeriodEnum period, String currency);
 
-    int GetSessionDecreaseAmount(PeriodEnum period, String currency);
+    int getSessionIncreaseAmount(PeriodEnum period, String currency);
 
-    int GetSessionWithoutChangeAmount(PeriodEnum period, String currency);
+    int getSessionDecreaseAmount(PeriodEnum period, String currency);
 
-    double GetMedianOfRate(PeriodEnum period, String currency);
+    int getSessionWithoutChangeAmount(PeriodEnum period, String currency);
 
-    double GetDominantOfRate(PeriodEnum period, String currency);
+    double getMedianOfRate(PeriodEnum period, String currency);
 
-    double GetStandardDevationOfRate(PeriodEnum period, String currency);
+    double getDominantOfRate(PeriodEnum period, String currency);
 
-    double GetCoefficientOfVariationOfRate(PeriodEnum period, String currency);
+    double getStandardDevationOfRate(PeriodEnum period, String currency);
 
-    void GetMonthlyDistributionOfChanges(String currencyOne, String currencyTwo);
+    double getCoefficientOfVariationOfRate(PeriodEnum period, String currency);
 
-    void GetQuarterDistributionOfChanges(String currencyOne, String currencyTwo);
+    void getMonthlyDistributionOfChanges(String currencyOne, String currencyTwo);
+
+    void getQuarterDistributionOfChanges(String currencyOne, String currencyTwo);
+
 }

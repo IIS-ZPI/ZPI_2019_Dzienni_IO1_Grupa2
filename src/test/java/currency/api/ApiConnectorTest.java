@@ -15,7 +15,7 @@ public class ApiConnectorTest {
     @Before
     public void init() {
         currencyRatesContainer =
-                ApiConnector.GetJsonFileFromStringResponse(CurrencyRatesContainer[].class, getTestJson());
+                ApiConnector.getJsonFileFromStringResponse(CurrencyRatesContainer[].class, getTestJson());
     }
 
     @Test

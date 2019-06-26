@@ -3,5 +3,5 @@ package currency.api;
 import currency.api.entities.CurrencyRatesContainer;
 
 public interface IApiDataProvider {
-    CurrencyRatesContainer[] RequestTopExchangeRates(String tableType, int topCount);
+    CurrencyRatesContainer[] requestTopExchangeRates(String tableType, int topCount);
 }

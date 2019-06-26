@@ -8,51 +8,51 @@ public class DataProvider implements IDataProvider {
     private IApiDataProvider apiDataProvider;
 
     public DataProvider() {
-        apiDataProvider = ApiConnectorFactory.GetDefaultConnector();
+        apiDataProvider = ApiConnectorFactory.getDefaultConnector();
     }
 
     @Override
-    public int GetSessionIncreaseAmount(PeriodEnum period, String currency) {
+    public int getSessionIncreaseAmount(PeriodEnum period, String currency) {
         return 0;
     }
 
     @Override
-    public int GetSessionDecreaseAmount(PeriodEnum period, String currency) {
+    public int getSessionDecreaseAmount(PeriodEnum period, String currency) {
         return 0;
     }
 
     @Override
-    public int GetSessionWithoutChangeAmount(PeriodEnum period, String currency) {
+    public int getSessionWithoutChangeAmount(PeriodEnum period, String currency) {
         return 0;
     }
 
     @Override
-    public double GetMedianOfRate(PeriodEnum period, String currency) {
+    public double getMedianOfRate(PeriodEnum period, String currency) {
         return 0;
     }
 
     @Override
-    public double GetDominantOfRate(PeriodEnum period, String currency) {
+    public double getDominantOfRate(PeriodEnum period, String currency) {
         return 0;
     }
 
     @Override
-    public double GetStandardDevationOfRate(PeriodEnum period, String currency) {
+    public double getStandardDevationOfRate(PeriodEnum period, String currency) {
         return 0;
     }
 
     @Override
-    public double GetCoefficientOfVariationOfRate(PeriodEnum period, String currency) {
+    public double getCoefficientOfVariationOfRate(PeriodEnum period, String currency) {
         return 0;
     }
 
     @Override
-    public void GetMonthlyDistributionOfChanges(String currencyOne, String currencyTwo) {
+    public void getMonthlyDistributionOfChanges(String currencyOne, String currencyTwo) {
 
     }
 
     @Override
-    public void GetQuarterDistributionOfChanges(String currencyOne, String currencyTwo) {
+    public void getQuarterDistributionOfChanges(String currencyOne, String currencyTwo) {
 
     }
 }

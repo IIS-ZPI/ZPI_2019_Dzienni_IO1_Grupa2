@@ -1,7 +1,7 @@
 package currency.api;
 
 public class ApiConnectorFactory {
-    public static IApiDataProvider GetDefaultConnector() {
-        return ApiConnector.GetInstance();
+    public static IApiDataProvider getDefaultConnector() {
+        return ApiConnector.getInstance();
     }
 }
