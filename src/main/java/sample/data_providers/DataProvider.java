@@ -74,7 +74,8 @@ public class DataProvider implements IDataProvider
     }
 
     @Override
-    public int GetSessionIncreaseAmount(PeriodEnum period, String currency) {
+    public int GetSessionIncreaseAmount(PeriodEnum period, String currency)
+    {
         String periodStr = GetDateStringForPeriod(period);
         CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
         int amount = 0;
@@ -97,13 +98,51 @@ public class DataProvider implements IDataProvider
     }
 
     @Override
-    public int GetSessionDecreaseAmount(PeriodEnum period, String currency) {
-        return 0;
+    public int GetSessionDecreaseAmount(PeriodEnum period, String currency)
+    {
+        String periodStr = GetDateStringForPeriod(period);
+        CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
+        int amount = 0;
+        double lastValue = 0;
+        List<CurrencyRate> list = container.getRates();
+
+        if (list.size() > 0)
+            lastValue = list.get(0).getMid();
+
+        for (int i = 1; i < list.size(); ++i)
+        {
+            double val = list.get(i).getMid();
+            if (val < lastValue)
+                ++amount;
+
+            lastValue = val;
+        }
+
+        return amount;
     }
 
     @Override
-    public int GetSessionWithoutChangeAmount(PeriodEnum period, String currency) {
-        return 0;
+    public int GetSessionWithoutChangeAmount(PeriodEnum period, String currency)
+    {
+        String periodStr = GetDateStringForPeriod(period);
+        CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
+        int amount = 0;
+        double lastValue = 0;
+        List<CurrencyRate> list = container.getRates();
+
+        if (list.size() > 0)
+            lastValue = list.get(0).getMid();
+
+        for (int i = 1; i < list.size(); ++i)
+        {
+            double val = list.get(i).getMid();
+            if (val == lastValue)
+                ++amount;
+
+            lastValue = val;
+        }
+
+        return amount;
     }
 
     @Override
