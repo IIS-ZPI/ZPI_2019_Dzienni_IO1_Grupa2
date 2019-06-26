@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -98,32 +99,57 @@ public class Controller implements Initializable {
         String currency1 = currencyComboBox.getSelectionModel().getSelectedItem();
         String currency2 = currencyComboBox2.getSelectionModel().getSelectedItem();
         String query = listOfQueryParameters.getSelectionModel().getSelectedItem();
-        double result = -999;
+        List<Double> resultList = null;
+        double resultDouble = 0;
+        int resultInt = 0;
+        String resultType = null;
         if (!query.isEmpty() && !currency1.isEmpty() && !periodComboBox.getSelectionModel().getSelectedItem().isEmpty()) {
 
             listOfData.getItems().clear();
 
-            if (query == parameters1.get(0))
-                result = provider.getSessionIncreaseAmount(period, currency1);
-            if (query == parameters1.get(1))
-                result = provider.getSessionDecreaseAmount(period, currency1);
-            if (query == parameters1.get(2))
-                result = provider.getSessionWithoutChangeAmount(period, currency1);
-            if (query == parameters2.get(0))
-                result = provider.getMedianOfRate(period, currency1);
-            //if (query == parameters2.get(1))
-            //result = provider.getDominantOfRate(period, currency1);
-            if (query == parameters2.get(2))
-                result = provider.getStandardDevationOfRate(period, currency1);
-            if (query == parameters2.get(3))
-                result = provider.getCoefficientOfVariationOfRate(period, currency1);
+            if (query == parameters1.get(0)) {
+                resultInt = provider.getSessionIncreaseAmount(period, currency1);
+                resultType = "int";
+            }
+            if (query == parameters1.get(1)) {
+                resultInt = provider.getSessionDecreaseAmount(period, currency1);
+                resultType = "int";
+            }
+            if (query == parameters1.get(2)) {
+                resultInt = provider.getSessionWithoutChangeAmount(period, currency1);
+                resultType = "int";
+            }
+            if (query == parameters2.get(0)) {
+                resultDouble = provider.getMedianOfRate(period, currency1);
+                resultType = "double";
+            }
+            if (query == parameters2.get(1)) {
+                resultList = provider.getDominantOfRate(period, currency1);
+                resultType = "list";
+            }
+            if (query == parameters2.get(2)) {
+                resultDouble = provider.getStandardDevationOfRate(period, currency1);
+                resultType = "double";
+            }
+            if (query == parameters2.get(3)) {
+                resultDouble = provider.getCoefficientOfVariationOfRate(period, currency1);
+                resultType = "double";
+            }
             if (!currency2.isEmpty() && query == parameters3.get(0)) {
-                //result = provider.GetMonthlyDistributionOfChanges(currency1, currency2);
+                resultList = provider.getMonthlyDistributionOfChanges(currency1, currency2);
+                resultType = "list";
             }
             if (!currency2.isEmpty() && query == parameters3.get(1)) {
-                //result = provider.getQuarterDistributionOfChanges(currency1, currency2);
+                resultList = provider.getQuarterDistributionOfChanges(currency1, currency2);
+                resultType = "list";
             }
-            queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + period + "\nData: MM.dd.YYYY\t\t" + result;
+            if(resultType == "list") {
+                queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + period + "\nData: MM.dd.YYYY\t\t" + resultList.toString();
+            } else if(resultType == "double"){
+                queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + period + "\nData: MM.dd.YYYY\t\t" + resultDouble;
+            } else if(resultType == "int"){
+                queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + period + "\nData: MM.dd.YYYY\t\t" + resultInt;
+            }
             queryValueList.add(queryValue);
             listOfData.getItems().addAll(queryValueList);
         }
@@ -164,8 +190,6 @@ public class Controller implements Initializable {
         try {
             Parent root1 = FXMLLoader.load(getClass().getResource("..\\line_chart.fxml"));
             Stage stage = new Stage();
-            //stage.initModality(Modality.APPLICATION_MODAL);
-            //stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle(queryValue);
             stage.setScene(new Scene(root1));
             stage.show();
