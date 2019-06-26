@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
-    IDataProvider provider = DataProviderFactory.GetDefaultDataProvider();
+    IDataProvider provider = DataProviderFactory.getDefaultDataProvider();
 
     @FXML
     private ComboBox<String> queriesComboBox;
