@@ -4,6 +4,8 @@ import sample.PeriodEnum;
 
 public interface IDataProvider
 {
+    String GetDateStringForPeriod(PeriodEnum period);
+
     int GetSessionIncreaseAmount(PeriodEnum period, String currency);
     int GetSessionDecreaseAmount(PeriodEnum period, String currency);
     int GetSessionWithoutChangeAmount(PeriodEnum period, String currency);
