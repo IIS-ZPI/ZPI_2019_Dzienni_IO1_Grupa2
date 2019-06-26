@@ -3,21 +3,15 @@ package sample;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sample.api.ApiConnector;
-import sample.api.entities.CurrencyRates;
-import sample.api.entities.CurrencyRatesContainer;
 import sample.data_providers.DataProviderFactory;
 import sample.data_providers.IDataProvider;
 
@@ -36,7 +30,10 @@ public class Controller implements Initializable {
                     "Rozkład zmian miesięcznych i kwartalnych dla par walutowych"};
     @FXML
     private ComboBox<String> currencyComboBox;
-    ObservableList<String> currency = FXCollections.observableArrayList();
+    ObservableList<String> currency = FXCollections.observableArrayList("USD", "PLN", "THB");
+
+    @FXML
+    private ComboBox<String> currencyComboBox2;
 
     @FXML
     private ComboBox<String> periodComboBox;
@@ -93,7 +90,43 @@ public class Controller implements Initializable {
             listOfData.getItems().addAll(container[0].toString());
             listOfData.getItems().addAll(container2[0].toString());
 
+
+
         }*/
+        PeriodEnum period = setPeriod(periodComboBox.getSelectionModel().getSelectedItem());
+        String currency1 = currencyComboBox.getSelectionModel().getSelectedItem();
+        String currency2 = currencyComboBox2.getSelectionModel().getSelectedItem();
+        String query = listOfQueryParameters.getSelectionModel().getSelectedItem();
+        double result = -999;
+        if(!query.isEmpty() && !currency1.isEmpty() && !periodComboBox.getSelectionModel().getSelectedItem().isEmpty()){
+
+            listOfData.getItems().clear();
+
+            if(query == parameters1.get(0))
+                result = provider.GetSessionIncreaseAmount(period, currency1);
+            if(query == parameters1.get(1))
+                result = provider.GetSessionDecreaseAmount(period, currency1);
+            if(query == parameters1.get(2))
+                result = provider.GetSessionWithoutChangeAmount(period, currency1);
+            if(query == parameters2.get(0))
+                result = provider.GetMedianOfRate(period, currency1);
+            if(query == parameters2.get(1))
+                result = provider.GetDominantOfRate(period,currency1);
+            if(query == parameters2.get(2))
+                result = provider.GetStandardDevationOfRate(period, currency1);
+            if(query == parameters2.get(3))
+                result = provider.GetCoefficientOfVariationOfRate(period, currency1);
+            if(!currency2.isEmpty()) {
+                //if (query == parameters3.get(0))
+                    //result = provider.GetMonthlyDistributionOfChanges(currency1, currency2);
+                //if (query == parameters3.get(1))
+                    //result = provider.GetQuarterDistributionOfChanges(currency1, currency2);
+            }
+            queryValue = query + " / Waluta: " + currency1 + " / Za okres: " + period + " - " + result;
+            queryValueList.add(queryValue);
+            listOfData.getItems().addAll(queryValueList);
+        }
+
     }
 
     @FXML
@@ -109,6 +142,7 @@ public class Controller implements Initializable {
         queriesComboBox.getItems().addAll(queries[0], queries[1], queries[2]);
         periodComboBox.getItems().addAll(periods);
         currencyComboBox.getItems().addAll(currency);
+        currencyComboBox2.getItems().addAll(currency);
     }
 
     private void setListViewContent(String query){
@@ -126,19 +160,19 @@ public class Controller implements Initializable {
 
     @FXML
     private void drawChart(){
-        /*
+
         try {
-            Parent root = new FXMLLoader().load(getClass().getResource("..\\line_chart.fxml"));
+            Parent root1 = FXMLLoader.load(getClass().getResource("..\\line_chart.fxml"));
             Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("Chart");
-            stage.setScene(new Scene(root));
+            //stage.initModality(Modality.APPLICATION_MODAL);
+            //stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle(queryValue);
+            stage.setScene(new Scene(root1));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
+
     }
 
     private void fillCurrencyComboBox(){
@@ -150,6 +184,23 @@ public class Controller implements Initializable {
         for(int i=0; i<container2[0].getRates().length; i++){
             currency.add(container2[0].getRates()[i].getCode() + " - " + container2[0].getRates()[i].getCurrency());
         }*/
+    }
+    private PeriodEnum setPeriod(String s){
+        //"1 tydzień", "2 tygodnie", "1 miesiąc", "3 miesiące", "6 miesięcy", "rok"
+        if(s == "1 tydzień")
+            return PeriodEnum.PERIOD_WEEK;
+        if(s == "2 tygodnie")
+            return PeriodEnum.PERIOD_TWO_WEEKS;
+        if(s == "1 miesiąc")
+            return PeriodEnum.PERIOD_MONTH;
+        if(s == "3 miesiące")
+            return PeriodEnum.PERIOD_QUARTER;
+        if(s == "6 miesięcy")
+            return PeriodEnum.PERIOD_HALF_OF_YEAR;
+        if(s == "rok")
+            return PeriodEnum.PERIOD_YEAR;
+        else
+            return null;
     }
 
 
