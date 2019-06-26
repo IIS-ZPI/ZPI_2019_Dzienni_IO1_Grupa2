@@ -7,11 +7,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
-    IDataProvider provider = DataProviderFactory.GetDefaultDataProvider();
+    IDataProvider provider = DataProviderFactory.getDefaultDataProvider();
 
     @FXML
     private ComboBox<String> queriesComboBox;
@@ -85,8 +85,8 @@ public class Controller implements Initializable {
         }
         if(listOfQueryParameters.getSelectionModel().isEmpty() && currencyComboBox.getSelectionModel().isEmpty() && periodComboBox.getSelectionModel().isEmpty()) {
             listOfData.getItems().clear();
-            CurrencyRatesContainer[] container = api.requestTopExchangeRates("A", 1);
-            CurrencyRatesContainer[] container2 = api.requestTopExchangeRates("B", 1);
+            CurrenciesTopRatesContainer[] container = api.requestTopExchangeRates("A", 1);
+            CurrenciesTopRatesContainer[] container2 = api.requestTopExchangeRates("B", 1);
             //String lines[] = string.split("\\r?\\n");
             listOfData.getItems().addAll(container[0].toString());
             listOfData.getItems().addAll(container2[0].toString());
@@ -109,8 +109,8 @@ public class Controller implements Initializable {
                 result = provider.getSessionWithoutChangeAmount(period, currency1);
             if (query == parameters2.get(0))
                 result = provider.getMedianOfRate(period, currency1);
-            if (query == parameters2.get(1))
-                result = provider.getDominantOfRate(period, currency1);
+            //if (query == parameters2.get(1))
+            //result = provider.getDominantOfRate(period, currency1);
             if (query == parameters2.get(2))
                 result = provider.getStandardDevationOfRate(period, currency1);
             if (query == parameters2.get(3))
@@ -175,8 +175,8 @@ public class Controller implements Initializable {
     }
 
     private void fillCurrencyComboBox() {
-        /*CurrencyRatesContainer[] container = api.requestTopExchangeRates("A", 1);
-        CurrencyRatesContainer[] container2 = api.requestTopExchangeRates("B", 1);
+        /*CurrenciesTopRatesContainer[] container = api.requestTopExchangeRates("A", 1);
+        CurrenciesTopRatesContainer[] container2 = api.requestTopExchangeRates("B", 1);
         for(int i=0; i<container[0].getRates().length; i++){
             currency.add(container[0].getRates()[i].getCode() + " - " + container[0].getRates()[i].getCurrency());
         }

@@ -1,4 +1,4 @@
-package sample;
+package currency;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +22,8 @@ public class ChartController implements Initializable {
     private NumberAxis y;
 
 
-    @Override public void initialize(URL location, ResourceBundle resources) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         XYChart.Series series = new XYChart.Series();
         series.getData().add(new XYChart.Data("1", 5));
         series.getData().add(new XYChart.Data("2", 2.92));

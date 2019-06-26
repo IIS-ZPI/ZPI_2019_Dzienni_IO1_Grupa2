@@ -1,6 +1,7 @@
 package currency.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import currency.api.entities.CurrenciesTopRatesContainer;
 import currency.api.entities.CurrencyRatesContainer;
 
 import java.io.InputStreamReader;
@@ -9,12 +10,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class ApiConnector implements IApiDataProvider {
-
-    // Class functionality
-    private HttpURLConnection connection;
-    private URL connectionTarget;
-    private boolean isConncected = false;
-
     // Singleton related definitions
     private ApiConnector() {
     }
@@ -28,7 +23,12 @@ public class ApiConnector implements IApiDataProvider {
         return Instance;
     }
 
-    private boolean connectToApi(String urlName) {
+    // Class functionality
+    private HttpURLConnection connection;
+    private URL connectionTarget;
+    private boolean isConncected = false;
+
+    private boolean ConnectToApi(String urlName) {
         if (isConncected)
             return false;
 
@@ -47,50 +47,66 @@ public class ApiConnector implements IApiDataProvider {
         return true;
     }
 
-    public CurrencyRatesContainer[] requestTopExchangeRates(String tableType, int topCount) {
+    @Override
+    public CurrenciesTopRatesContainer[] requestTopExchangeRates(String tableType, int topCount) {
         StringBuilder builder = new StringBuilder("http://api.nbp.pl/api/exchangerates/tables/");
         builder.append(tableType);
         builder.append("/last/");
         builder.append(topCount);
         builder.append("/?format=json");
-        System.out.println(builder.toString());
-        if (!connectToApi(builder.toString()))
+
+        if (!ConnectToApi(builder.toString()))
             return null;
 
-        CurrencyRatesContainer[] requestResult = request(CurrencyRatesContainer[].class);
+        CurrenciesTopRatesContainer[] requestResult = Request(CurrenciesTopRatesContainer[].class);
         //for (var node : requestResult)
         //System.out.println(node.toString());
         return requestResult;
     }
 
-    private <T> T[] request(Class<T[]> classType) {
+    @Override
+    public CurrencyRatesContainer requestRatesForCurrency(String currency, String period) {
+        StringBuilder builder = new StringBuilder("http://api.nbp.pl/api/exchangerates/rates/a/");
+        builder.append(currency);
+        builder.append("/");
+        builder.append(period);
+        builder.append("?format=json");
+
+        if (!ConnectToApi(builder.toString()))
+            return null;
+
+        CurrencyRatesContainer requestResult = Request(CurrencyRatesContainer.class);
+        return requestResult;
+    }
+
+    private <T> T Request(Class<T> classType) {
         if (!isConncected)
             return null;
 
-        T[] result = null;
+        T result = null;
 
         try {
             connection.setRequestMethod("GET");
             connection.connect();
 
             if (connection.getResponseCode() == 200)
-                result = getJsonFileFromResponse(classType);
+                result = GetJsonFileFromResponse(classType);
         } catch (Exception e) {
             System.out.println("Blad podczas pobierania danych z api!");
         }
 
-        closeConnection();
+        CloseConnection();
         return result;
     }
 
-    private void closeConnection() {
+    private void CloseConnection() {
         connection.disconnect();
         connection = null;
         connectionTarget = null;
         isConncected = false;
     }
 
-    private <T> T[] getJsonFileFromResponse(Class<T[]> classType) {
+    private <T> T GetJsonFileFromResponse(Class<T> classType) {
         InputStreamReader input;
         try {
             input = new InputStreamReader(connection.getInputStream());
@@ -101,7 +117,7 @@ public class ApiConnector implements IApiDataProvider {
 
         //BufferedReader reader = new BufferedReader(input);
         ObjectMapper mapper = new ObjectMapper();
-        T[] result = null;
+        T result = null;
 
         // Debug code
         try {
@@ -116,7 +132,7 @@ public class ApiConnector implements IApiDataProvider {
         return result;
     }
 
-    public static <T> T[] getJsonFileFromStringResponse(Class<T[]> classType, String jsonString) {
+    public static <T> T[] GetJsonFileFromStringResponse(Class<T[]> classType, String jsonString) {
         ObjectMapper mapper = new ObjectMapper();
         T[] result = null;
 
@@ -129,5 +145,4 @@ public class ApiConnector implements IApiDataProvider {
 
         return result;
     }
-    
 }
