@@ -106,6 +106,7 @@ public class Controller implements Initializable {
         if (!query.isEmpty() && !currency1.isEmpty() && !periodComboBox.getSelectionModel().getSelectedItem().isEmpty()) {
 
             listOfData.getItems().clear();
+            clearList();
 
             if (query == parameters1.get(0)) {
                 resultInt = provider.getSessionIncreaseAmount(period, currency1);
@@ -186,7 +187,6 @@ public class Controller implements Initializable {
 
     @FXML
     private void drawChart() {
-
         try {
             Parent root1 = FXMLLoader.load(getClass().getResource("..\\line_chart.fxml"));
             Stage stage = new Stage();
@@ -200,7 +200,6 @@ public class Controller implements Initializable {
     }
 
     private PeriodEnum setPeriod(String s) {
-        //"1 tydzień", "2 tygodnie", "1 miesiąc", "3 miesiące", "6 miesięcy", "rok"
         if (s == "1 tydzień")
             return PeriodEnum.PERIOD_WEEK;
         if (s == "2 tygodnie")
@@ -218,15 +217,9 @@ public class Controller implements Initializable {
     }
 
     private void initCurrencyList(){
-        String[] cr = {"AFN","MGA","PAB","ETB","VES","BOB","CRC","SVC","NIO","GMD","MKD","DZD","BHD",
-                "IQD","JOD","KWD","LYD","RSD","TND","MAD","AED","STN","BSD","BBD","BZD","BND","FJD",
-                "GYD","JMD","LRD","NAD","SRD","TTD","XCD","SBD","VND","AMD","CVE","AWG","BIF","XOF","XAF",
-                "XPF","DJF","GNF","KMF","CDF","RWF","EGP","GIP","LBP","SSP","SDG","SYP","GHS","HTG","PYG","ANG","PGK"
-                ,"LAK","MWK","ZMW","AOA","MMK","GEL","MDL","ALL","HNL","SLL","SZL","LSL","AZN","MZN","NGN","ERN","TWD","TMT"
-                ,"MRU","TOP","MOP","ARS","DOP","COP","CUP","UYU","BWP","GTQ","IRR","YER","QAR","OMR","SAR","KHR","BYN","LKR","MVR",
-                "MUR","NPR","PKR","SCR","PEN","KGS","TJS","UZS","KES","SOS","TZS","UGX","BDT","WST","KZT","MNT","VUV","BAM","THB","USD",
-                "AUD","HKD","CAD","NZD","SGD","EUR","HUF","CHF","GBP","UAH","JPY","CZK","DKK","ISK","NOK","SEK","HRK","RON","BGN","TRY",
-                "ILS","CLP","PHP","MXN","ZAR","BRL","MYR","RUB","IDR","INR","KRW","CNY","XDR"};
+        String[] cr = {"THB", "USD","AUD","HKD","CAD","NZD","SGD","EUR","HUF","CHF","GBP","UAH","JPY","CZK",
+                "DKK","NOK","SEK","HRK","RON","BGN","TRY","ILS","CLP","PHP","MXN","ZAR","BRL","MYR",
+                "RUB","IDR","INR","KRW","CNY","XDR"};
         currency.addAll(cr);
     }
 
