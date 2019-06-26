@@ -123,16 +123,19 @@ public class Controller implements Initializable {
             resultDouble = provider.getCoefficientOfVariationOfRate(period, currency1);
             resultType = "double";
         }
-        if (!currency2.isEmpty() && query == parameters3.get(0)) {
+        if (query == parameters3.get(0)) {
             resultList = provider.getMonthlyDistributionOfChanges(currency1, currency2);
             resultType = "list";
         }
-        if (!currency2.isEmpty() && query == parameters3.get(1)) {
+        if (query == parameters3.get(1)) {
             resultList = provider.getQuarterDistributionOfChanges(currency1, currency2);
             resultType = "list";
         }
         if (resultType == "list") {
-            queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + periodString + "\nWartość:\t\t" + resultList.toString();
+            if(query != parameters3.get(0) && query != parameters3.get(1))
+                queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + periodString + "\nWartość:\t\t" + resultList.toString();
+            else
+                queryValue = query + " / Dla walut: " + currency1 + " & " + currency2 + " \nZa okres: " + periodString + "\nWartość:\t\t" + resultList.toString();
         } else if (resultType == "double") {
             queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + periodString + "\nWartość:\t\t" + resultDouble;
         } else if (resultType == "int") {
