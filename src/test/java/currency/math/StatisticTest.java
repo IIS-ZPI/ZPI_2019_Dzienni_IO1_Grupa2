@@ -1,4 +1,4 @@
-package sample.math;
+package currency.math;
 
 import org.hamcrest.core.Is;
 import org.junit.Test;
@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static sample.math.Statistic.*;
+import static currency.math.Statistic.*;
 
 public class StatisticTest {
 

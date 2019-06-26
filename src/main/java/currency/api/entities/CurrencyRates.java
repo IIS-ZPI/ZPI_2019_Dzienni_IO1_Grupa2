@@ -1,13 +1,20 @@
-package sample.api.entities;
+package currency.api.entities;
 
-public class RatesOfCurrencyInLastPeriod {
+public class CurrencyRates {
+    // name of currency
+    private String currency;
     // currency code name
     private String code;
-    // date of obtained data
-    private String effectiveDate;
     // rates
     private double mid;
 
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 
     public String getCode() {
         return code;
@@ -15,14 +22,6 @@ public class RatesOfCurrencyInLastPeriod {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public String getEffectiveDate() {
-        return effectiveDate;
-    }
-
-    public void setEffectiveDate(String effectiveDate) {
-        this.effectiveDate = effectiveDate;
     }
 
     public double getMid() {
