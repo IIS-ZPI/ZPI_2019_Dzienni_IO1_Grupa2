@@ -65,12 +65,10 @@ public class DataProvider implements IDataProvider {
         builder.append(time.getYear());
         builder.append("-");
         int monthVal = time.getMonthValue();
-        if (monthVal < 10)
-        {
+        if (monthVal < 10) {
             String month = "0" + monthVal;
             builder.append(month);
-        }
-        else
+        } else
             builder.append(time.getMonthValue());
         builder.append("-");
         builder.append(time.getDayOfMonth());
