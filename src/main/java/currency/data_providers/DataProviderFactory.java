@@ -1,4 +1,4 @@
-package sample.data_providers;
+package currency.data_providers;
 
 public class DataProviderFactory {
     public static IDataProvider GetDefaultDataProvider() {

@@ -1,6 +1,4 @@
-package sample.api.entities;
-
-import java.util.List;
+package currency.api.entities;
 
 public class CurrencyRatesContainer {
     // table type

@@ -1,6 +1,6 @@
-package sample.api;
+package currency.api;
 
-import sample.api.entities.CurrencyRatesContainer;
+import currency.api.entities.CurrencyRatesContainer;
 
 public interface IApiDataProvider {
     CurrencyRatesContainer[] RequestTopExchangeRates(String tableType, int topCount);

@@ -1,4 +1,4 @@
-package sample.api.entities;
+package currency.api.entities;
 
 public class RatesOfCurrencyInLastPeriodContainer {
     // table type

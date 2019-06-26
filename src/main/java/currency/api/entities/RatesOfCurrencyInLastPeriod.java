@@ -1,4 +1,4 @@
-package sample.api.entities;
+package currency.api.entities;
 
 public class RatesOfCurrencyInLastPeriod {
     // currency code name

@@ -1,4 +1,4 @@
-package sample;
+package currency;
 
 public enum PeriodEnum {
     PERIOD_WEEK,

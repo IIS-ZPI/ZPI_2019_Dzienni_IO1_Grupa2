@@ -1,7 +1,7 @@
-package sample.api;
+package currency.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import sample.api.entities.CurrencyRatesContainer;
+import currency.api.entities.CurrencyRatesContainer;
 
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;

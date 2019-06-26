@@ -1,6 +1,6 @@
-package sample.data_providers;
+package currency.data_providers;
 
-import sample.PeriodEnum;
+import currency.PeriodEnum;
 
 public interface IDataProvider {
     int GetSessionIncreaseAmount(PeriodEnum period, String currency);

@@ -1,8 +1,8 @@
-package sample.data_providers;
+package currency.data_providers;
 
-import sample.PeriodEnum;
-import sample.api.ApiConnectorFactory;
-import sample.api.IApiDataProvider;
+import currency.PeriodEnum;
+import currency.api.ApiConnectorFactory;
+import currency.api.IApiDataProvider;
 
 public class DataProvider implements IDataProvider {
     private IApiDataProvider apiDataProvider;

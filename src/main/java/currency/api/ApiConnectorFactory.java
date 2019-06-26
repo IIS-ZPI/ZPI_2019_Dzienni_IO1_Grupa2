@@ -1,4 +1,4 @@
-package sample.api;
+package currency.api;
 
 public class ApiConnectorFactory {
     public static IApiDataProvider GetDefaultConnector() {
