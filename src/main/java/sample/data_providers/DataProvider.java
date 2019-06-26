@@ -5,8 +5,10 @@ import sample.api.ApiConnectorFactory;
 import sample.api.IApiDataProvider;
 import sample.api.entities.CurrencyRate;
 import sample.api.entities.CurrencyRatesContainer;
+import sample.math.Statistic;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataProvider implements IDataProvider {
@@ -143,24 +145,47 @@ public class DataProvider implements IDataProvider {
         return amount;
     }
 
-    @Override
-    public double GetMedianOfRate(PeriodEnum period, String currency) {
-        return 0;
+    private double[] GetValuesListForRate(PeriodEnum period, String currency)
+    {
+        String periodStr = GetDateStringForPeriod(period);
+        CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
+        if (container == null)
+            return null;
+
+        double[] listOfValues = new double[container.getRates().size()];
+        for (int i = 0; i < container.getRates().size(); ++i)
+            listOfValues[i] = container.getRates().get(i).getMid();
+
+        return listOfValues;
     }
 
     @Override
-    public double GetDominantOfRate(PeriodEnum period, String currency) {
-        return 0;
+    public double GetMedianOfRate(PeriodEnum period, String currency) {
+        double[] listOfValues = GetValuesListForRate(period, currency);
+        if (listOfValues == null)
+            return 0.0f;
+        return Statistic.median(listOfValues);
+    }
+
+    @Override
+    public List<Double> GetDominantOfRate(PeriodEnum period, String currency) {
+        double[] listOfValues = GetValuesListForRate(period, currency);
+        if (listOfValues == null)
+            return new ArrayList<>();
+
+        return Statistic.dominant(listOfValues);
     }
 
     @Override
     public double GetStandardDevationOfRate(PeriodEnum period, String currency) {
-        return 0;
+        double[] listOfValues = GetValuesListForRate(period, currency);
+        return Statistic.standardDeviation(listOfValues);
     }
 
     @Override
     public double GetCoefficientOfVariationOfRate(PeriodEnum period, String currency) {
-        return 0;
+        double[] lisOfValues = GetValuesListForRate(period, currency);
+        return Statistic.coefficientOfVariation(lisOfValues);
     }
 
     @Override

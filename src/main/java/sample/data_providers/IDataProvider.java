@@ -2,6 +2,8 @@ package sample.data_providers;
 
 import sample.PeriodEnum;
 
+import java.util.List;
+
 public interface IDataProvider
 {
     String GetDateStringForPeriod(PeriodEnum period);
@@ -11,7 +13,7 @@ public interface IDataProvider
     int GetSessionWithoutChangeAmount(PeriodEnum period, String currency);
 
     double GetMedianOfRate(PeriodEnum period, String currency);
-    double GetDominantOfRate(PeriodEnum period, String currency);
+    List<Double> GetDominantOfRate(PeriodEnum period, String currency);
     double GetStandardDevationOfRate(PeriodEnum period, String currency);
     double GetCoefficientOfVariationOfRate(PeriodEnum period, String currency);
 
