@@ -64,7 +64,14 @@ public class DataProvider implements IDataProvider {
         StringBuilder builder = new StringBuilder();
         builder.append(time.getYear());
         builder.append("-");
-        builder.append(time.getMonth());
+        int monthVal = time.getMonthValue();
+        if (monthVal < 10)
+        {
+            String month = "0" + monthVal;
+            builder.append(month);
+        }
+        else
+            builder.append(time.getMonthValue());
         builder.append("-");
         builder.append(time.getDayOfMonth());
         return builder.toString();
