@@ -2,7 +2,11 @@ package currency.data_providers;
 
 import currency.PeriodEnum;
 
+import java.util.List;
+
 public interface IDataProvider {
+
+    String getDateStringForPeriod(PeriodEnum period);
 
     int getSessionIncreaseAmount(PeriodEnum period, String currency);
 
@@ -12,14 +16,14 @@ public interface IDataProvider {
 
     double getMedianOfRate(PeriodEnum period, String currency);
 
-    double getDominantOfRate(PeriodEnum period, String currency);
+    List<Double> getDominantOfRate(PeriodEnum period, String currency);
 
     double getStandardDevationOfRate(PeriodEnum period, String currency);
 
     double getCoefficientOfVariationOfRate(PeriodEnum period, String currency);
 
-    void getMonthlyDistributionOfChanges(String currencyOne, String currencyTwo);
+    List<Double> getMonthlyDistributionOfChanges(String currencyOne, String currencyTwo);
 
-    void getQuarterDistributionOfChanges(String currencyOne, String currencyTwo);
+    List<Double> getQuarterDistributionOfChanges(String currencyOne, String currencyTwo);
 
 }
