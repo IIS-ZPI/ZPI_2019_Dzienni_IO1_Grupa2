@@ -73,7 +73,7 @@ public class DataProvider implements IDataProvider {
     @Override
     public int getSessionIncreaseAmount(PeriodEnum period, String currency) {
         String periodStr = getDateStringForPeriod(period);
-        CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
+        CurrencyRatesContainer container = apiDataProvider.requestRatesForCurrency(currency, periodStr);
         if (container == null)
             return 0;
 
@@ -98,7 +98,7 @@ public class DataProvider implements IDataProvider {
     @Override
     public int getSessionDecreaseAmount(PeriodEnum period, String currency) {
         String periodStr = getDateStringForPeriod(period);
-        CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
+        CurrencyRatesContainer container = apiDataProvider.requestRatesForCurrency(currency, periodStr);
         if (container == null)
             return 0;
 
@@ -123,7 +123,7 @@ public class DataProvider implements IDataProvider {
     @Override
     public int getSessionWithoutChangeAmount(PeriodEnum period, String currency) {
         String periodStr = getDateStringForPeriod(period);
-        CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
+        CurrencyRatesContainer container = apiDataProvider.requestRatesForCurrency(currency, periodStr);
         if (container == null)
             return 0;
 
@@ -147,7 +147,7 @@ public class DataProvider implements IDataProvider {
 
     private double[] GetValuesListForRate(PeriodEnum period, String currency) {
         String periodStr = getDateStringForPeriod(period);
-        CurrencyRatesContainer container = apiDataProvider.RequestRatesForCurrency(currency, periodStr);
+        CurrencyRatesContainer container = apiDataProvider.requestRatesForCurrency(currency, periodStr);
         if (container == null)
             return null;
 
@@ -199,8 +199,8 @@ public class DataProvider implements IDataProvider {
 
     private List<Double> getDistributionChanges(PeriodEnum periodEnum, String currencyOne, String currencyTwo) {
         String period = getDateStringForPeriod(PeriodEnum.PERIOD_MONTH);
-        CurrencyRatesContainer containerOne = apiDataProvider.RequestRatesForCurrency(currencyOne, period);
-        CurrencyRatesContainer containerTwo = apiDataProvider.RequestRatesForCurrency(currencyTwo, period);
+        CurrencyRatesContainer containerOne = apiDataProvider.requestRatesForCurrency(currencyOne, period);
+        CurrencyRatesContainer containerTwo = apiDataProvider.requestRatesForCurrency(currencyTwo, period);
 
         if (containerOne == null || containerTwo == null)
             return new ArrayList<>();

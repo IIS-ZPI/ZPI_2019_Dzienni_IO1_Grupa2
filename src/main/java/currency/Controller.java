@@ -85,8 +85,8 @@ public class Controller implements Initializable {
         }
         if(listOfQueryParameters.getSelectionModel().isEmpty() && currencyComboBox.getSelectionModel().isEmpty() && periodComboBox.getSelectionModel().isEmpty()) {
             listOfData.getItems().clear();
-            CurrenciesTopRatesContainer[] container = api.RequestTopExchangeRates("A", 1);
-            CurrenciesTopRatesContainer[] container2 = api.RequestTopExchangeRates("B", 1);
+            CurrenciesTopRatesContainer[] container = api.requestTopExchangeRates("A", 1);
+            CurrenciesTopRatesContainer[] container2 = api.requestTopExchangeRates("B", 1);
             //String lines[] = string.split("\\r?\\n");
             listOfData.getItems().addAll(container[0].toString());
             listOfData.getItems().addAll(container2[0].toString());
@@ -110,7 +110,7 @@ public class Controller implements Initializable {
             if (query == parameters2.get(0))
                 result = provider.getMedianOfRate(period, currency1);
             //if (query == parameters2.get(1))
-                //result = provider.getDominantOfRate(period, currency1);
+            //result = provider.getDominantOfRate(period, currency1);
             if (query == parameters2.get(2))
                 result = provider.getStandardDevationOfRate(period, currency1);
             if (query == parameters2.get(3))
@@ -174,9 +174,9 @@ public class Controller implements Initializable {
 
     }
 
-    private void fillCurrencyComboBox(){
-        /*CurrenciesTopRatesContainer[] container = api.RequestTopExchangeRates("A", 1);
-        CurrenciesTopRatesContainer[] container2 = api.RequestTopExchangeRates("B", 1);
+    private void fillCurrencyComboBox() {
+        /*CurrenciesTopRatesContainer[] container = api.requestTopExchangeRates("A", 1);
+        CurrenciesTopRatesContainer[] container2 = api.requestTopExchangeRates("B", 1);
         for(int i=0; i<container[0].getRates().length; i++){
             currency.add(container[0].getRates()[i].getCode() + " - " + container[0].getRates()[i].getCurrency());
         }

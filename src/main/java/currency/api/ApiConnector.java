@@ -48,7 +48,7 @@ public class ApiConnector implements IApiDataProvider {
     }
 
     @Override
-    public CurrenciesTopRatesContainer[] RequestTopExchangeRates(String tableType, int topCount) {
+    public CurrenciesTopRatesContainer[] requestTopExchangeRates(String tableType, int topCount) {
         StringBuilder builder = new StringBuilder("http://api.nbp.pl/api/exchangerates/tables/");
         builder.append(tableType);
         builder.append("/last/");
@@ -65,7 +65,7 @@ public class ApiConnector implements IApiDataProvider {
     }
 
     @Override
-    public CurrencyRatesContainer RequestRatesForCurrency(String currency, String period) {
+    public CurrencyRatesContainer requestRatesForCurrency(String currency, String period) {
         StringBuilder builder = new StringBuilder("http://api.nbp.pl/api/exchangerates/rates/a/");
         builder.append(currency);
         builder.append("/");

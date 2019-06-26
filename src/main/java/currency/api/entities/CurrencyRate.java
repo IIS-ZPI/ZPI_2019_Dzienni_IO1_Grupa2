@@ -1,7 +1,6 @@
 package currency.api.entities;
 
-public class CurrencyRate
-{
+public class CurrencyRate {
     private String no;
     private String effectiveDate;
     private double mid;

@@ -2,8 +2,7 @@ package currency.api.entities;
 
 import java.util.List;
 
-public class CurrencyRatesContainer
-{
+public class CurrencyRatesContainer {
     private String table;
     private String currency;
     private String code;
