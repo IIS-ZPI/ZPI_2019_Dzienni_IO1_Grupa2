@@ -12,25 +12,23 @@ import java.util.ResourceBundle;
 
 public class ChartController implements Initializable {
 
-    @FXML
-    private LineChart<?, ?> LineChart;
+    @FXML private LineChart<?, ?> LineChart;
 
-    @FXML
-    private CategoryAxis x;
+    @FXML private CategoryAxis x;
 
-    @FXML
-    private NumberAxis y;
+    @FXML private NumberAxis y;
 
+    private double[] valuesY = {5, 2.92, 3.96, 0.05, 6.03};
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        XYChart.Series series = new XYChart.Series();
-        series.getData().add(new XYChart.Data("1", 5));
-        series.getData().add(new XYChart.Data("2", 2.92));
-        series.getData().add(new XYChart.Data("3", 3.96));
-        series.getData().add(new XYChart.Data("4", 0.05));
-        series.getData().add(new XYChart.Data("5", 6.03));
-
+    @Override public void initialize(URL location, ResourceBundle resources) {
+        XYChart.Series series = createSeries();
         LineChart.getData().addAll(series);
+    }
+
+    private XYChart.Series createSeries() {
+        XYChart.Series series = new XYChart.Series();
+        for (int i = 0; i < valuesY.length; i++)
+            series.getData().add(new XYChart.Data(Integer.toString(i), valuesY[i]));
+        return series;
     }
 }

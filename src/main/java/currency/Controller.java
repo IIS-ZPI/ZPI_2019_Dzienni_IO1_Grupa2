@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -132,10 +133,18 @@ public class Controller implements Initializable {
             resultType = "list";
         }
         if (resultType == "list") {
-            if(query != parameters3.get(0) && query != parameters3.get(1))
+            if (query != parameters3.get(0) && query != parameters3.get(1))
                 queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + periodString + "\nWartość:\t\t" + resultList.toString();
             else
-                queryValue = query + " / Dla walut: " + currency1 + " & " + currency2 + " \nZa okres: " + periodString + "\nWartość:\t\t" + resultList.toString();
+                queryValue = query
+                             + " / Dla walut: "
+                             + currency1
+                             + " & "
+                             + currency2
+                             + " \nZa okres: "
+                             + periodString
+                             + "\nWartość:\t\t"
+                             + resultList.toString();
         } else if (resultType == "double") {
             queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + periodString + "\nWartość:\t\t" + resultDouble;
         } else if (resultType == "int") {
@@ -177,12 +186,17 @@ public class Controller implements Initializable {
     }
 
     @FXML private void drawChart() {
+        String selectedValue = listOfData.getSelectionModel().getSelectedItems().toString();
         try {
-            Parent root1 = FXMLLoader.load(getClass().getResource("..\\line_chart.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle(queryValue);
-            stage.setScene(new Scene(root1));
-            stage.show();
+            if(selectedValue.contains(parameters3.get(0)) || selectedValue.contains(parameters3.get(1))) {
+                Parent root1 = FXMLLoader.load(getClass().getResource("..\\line_chart.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle(queryValue);
+                stage.setScene(new Scene(root1));
+                stage.show();
+            } else {
+                showAlertWindow();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -190,17 +204,17 @@ public class Controller implements Initializable {
     }
 
     private PeriodEnum setPeriod(String s) {
-        if (s == "1 tydzień")
+        if (s == periods.get(0))
             return PeriodEnum.PERIOD_WEEK;
-        if (s == "2 tygodnie")
+        if (s == periods.get(1))
             return PeriodEnum.PERIOD_TWO_WEEKS;
-        if (s == "1 miesiąc")
+        if (s == periods.get(2))
             return PeriodEnum.PERIOD_MONTH;
-        if (s == "3 miesiące")
+        if (s == periods.get(3))
             return PeriodEnum.PERIOD_QUARTER;
-        if (s == "6 miesięcy")
+        if (s == periods.get(4))
             return PeriodEnum.PERIOD_HALF_OF_YEAR;
-        if (s == "rok")
+        if (s == periods.get(5))
             return PeriodEnum.PERIOD_YEAR;
         else
             return null;
@@ -211,6 +225,14 @@ public class Controller implements Initializable {
                 "SEK", "HRK", "RON", "BGN", "TRY", "ILS", "CLP", "PHP", "MXN", "ZAR", "BRL", "MYR", "RUB", "IDR", "INR", "KRW", "CNY",
                 "XDR"};
         currency.addAll(cr);
+    }
+
+    private void showAlertWindow(){
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Błąd");
+        alert.setHeaderText("Błąd podczas rysowania wykresu");
+        alert.setContentText("Nie można narysować wykresu dla wybranego zapytania");
+        alert.showAndWait();
     }
 
 }
