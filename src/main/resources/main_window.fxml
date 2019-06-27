@@ -8,31 +8,39 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="currency.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="currency.Controller">
     <children>
-        <VBox alignment="CENTER" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="CENTER" prefHeight="500.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-            <HBox prefHeight="20.0" prefWidth="600.0">
-               <children>
-                      <ComboBox fx:id="queriesComboBox" onAction="#comboBoxListener" prefWidth="350.0" promptText="Zapytania" />
-                  <ComboBox fx:id="periodComboBox" prefWidth="150.0" promptText="Okres" />
-                  <ComboBox fx:id="currencyComboBox" prefWidth="150.0" promptText="Waluta" />
-                  <ComboBox fx:id="currencyComboBox2" prefWidth="150.0" promptText="Waluta 2" />
-               </children>
-            </HBox>
-                <ListView fx:id="listOfQueryParameters" prefHeight="145.0" prefWidth="600.0" />
+                <HBox prefHeight="20.0" prefWidth="600.0">
+                    <children>
+                        <ComboBox fx:id="queriesComboBox" onAction="#comboBoxListener" prefWidth="350.0"
+                                  promptText="Zapytania"/>
+                        <ComboBox fx:id="periodComboBox" prefWidth="150.0" promptText="Okres"/>
+                        <ComboBox fx:id="currencyComboBox" prefWidth="150.0" promptText="Waluta"/>
+                        <ComboBox fx:id="currencyComboBox2" prefWidth="150.0" promptText="Waluta 2"/>
+                    </children>
+                </HBox>
+                <ListView fx:id="listOfQueryParameters" prefHeight="145.0" prefWidth="600.0"/>
                 <HBox prefHeight="16.0" prefWidth="591.0" spacing="69.0">
                     <children>
-                        <Button fx:id="executeButton" mnemonicParsing="false" onAction="#executeQuery" prefWidth="150.0" text="Wykonaj" />
-                        <Button fx:id="clearListButton" mnemonicParsing="false" onAction="#clearList" prefWidth="150.0" text="Wyczyść listę" />
-                        <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exit" prefWidth="150.0" text="Wyjdź" />
+                        <Button fx:id="executeButton" mnemonicParsing="false" onAction="#executeQuery" prefWidth="150.0"
+                                text="Wykonaj"/>
+                        <Button fx:id="clearListButton" mnemonicParsing="false" onAction="#clearList" prefWidth="150.0"
+                                text="Wyczyść listę"/>
+                        <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exit" prefWidth="150.0"
+                                text="Wyjdź"/>
                     </children>
                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                     </VBox.margin>
                 </HBox>
-                <ListView fx:id="listOfData" prefHeight="269.0" prefWidth="600.0" />
-            <Button fx:id="drawChartButton" mnemonicParsing="false" onAction="#drawChart" prefHeight="26.0" prefWidth="193.0" text="Rysuj wykres" textAlignment="CENTER" />
+                <ListView fx:id="listOfData" prefHeight="269.0" prefWidth="600.0"/>
+                <Button fx:id="drawChartButton" mnemonicParsing="false" onAction="#drawChart" prefHeight="26.0"
+                        prefWidth="193.0" text="Rysuj wykres" textAlignment="CENTER"/>
             </children>
         </VBox>
     </children>

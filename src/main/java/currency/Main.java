@@ -16,7 +16,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         if (runConnectionWindow()) {
             Parent root = FXMLLoader.load(getClass().getResource("..\\main_window.fxml"));
-            primaryStage.setTitle("Gold and exchange rates");
+            primaryStage.setTitle("Analiza statystyczna walut");
             primaryStage.setScene(new Scene(root, 600, 500));
             primaryStage.show();
         } else {
