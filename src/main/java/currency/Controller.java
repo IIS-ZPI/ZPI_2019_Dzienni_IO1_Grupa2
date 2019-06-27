@@ -174,7 +174,7 @@ public class Controller implements Initializable {
     }
 
     @FXML private void drawChart() {
-        String selectedValue = listOfData.getSelectionModel().getSelectedItems().toString();
+        String selectedValue = listOfData.getItems().get(0);
         try {
             if (selectedValue.contains(parameters3.get(0)) || selectedValue.contains(parameters3.get(1))) {
                 //Parent root1 = FXMLLoader.load(getClass().getResource("..\\line_chart.fxml"));
