@@ -26,49 +26,62 @@ public class Controller implements Initializable {
 
     IDataProvider provider = DataProviderFactory.getDefaultDataProvider();
 
-    @FXML private ComboBox<String> queriesComboBox;
+    @FXML
+    private ComboBox<String> queriesComboBox;
     String[] queries = {"Ilość sesji wzrostowych, spadkowych i bez zmian",
             "Miary statystyczne(mediana, dominanta, odchylenie standardowe, współczynnik zmienności",
             "Rozkład zmian miesięcznych i kwartalnych dla par walutowych"};
-    @FXML private ComboBox<String> currencyComboBox;
+    @FXML
+    private ComboBox<String> currencyComboBox;
     ObservableList<String> currency = FXCollections.observableArrayList();
 
-    @FXML private ComboBox<String> currencyComboBox2;
+    @FXML
+    private ComboBox<String> currencyComboBox2;
 
-    @FXML private ComboBox<String> periodComboBox;
+    @FXML
+    private ComboBox<String> periodComboBox;
     ObservableList<String> periods = FXCollections.observableArrayList("1 tydzień", "2 tygodnie", "1 miesiąc", "3 miesiące", "6 miesięcy",
             "rok");
 
-    @FXML private Button executeButton;
+    @FXML
+    private Button executeButton;
 
-    @FXML private Button clearListButton;
+    @FXML
+    private Button clearListButton;
 
-    @FXML private Button exitButton;
+    @FXML
+    private Button exitButton;
 
-    @FXML private Button drawChartButton;
+    @FXML
+    private Button drawChartButton;
 
-    @FXML private ListView<String> listOfQueryParameters;
+    @FXML
+    private ListView<String> listOfQueryParameters;
     ObservableList<String> parameters1 = FXCollections.observableArrayList("Sesje wzrostowe", "Sesje spadkowe", "Sesje bez zmian");
     ObservableList<String> parameters2 = FXCollections.observableArrayList("Mediana", "Dominanta", "Odchylenie standardowe",
             "Współczynnik zmienności");
     ObservableList<String> parameters3 = FXCollections.observableArrayList("Rozkład zmian miesięcznych", "Rozklad zmian kwartalnych");
 
-    @FXML private ListView<String> listOfData;
+    @FXML
+    private ListView<String> listOfData;
     String queryValue;
     ObservableList<String> queryValueList = FXCollections.observableArrayList();
 
     private List<Double> chartValues;
     private String chartTitle;
 
-    @FXML public void comboBoxListener() {
+    @FXML
+    public void comboBoxListener() {
         setListViewContent(queriesComboBox.getSelectionModel().getSelectedItem());
     }
 
-    @FXML private void exit() {
+    @FXML
+    private void exit() {
         System.exit(0);
     }
 
-    @FXML private void executeQuery() {
+    @FXML
+    private void executeQuery() {
         String periodString = periodComboBox.getSelectionModel().getSelectedItem();
         PeriodEnum period = setPeriod(periodString);
         String currency1 = currencyComboBox.getSelectionModel().getSelectedItem();
@@ -124,13 +137,7 @@ public class Controller implements Initializable {
             if (query != parameters3.get(0) && query != parameters3.get(1))
                 queryValue = query + " / Waluta: " + currency1 + " \nZa okres: " + periodString + "\nWartość:\t\t" + resultList.toString();
             else {
-                queryValue = query
-                             + " / Dla walut: "
-                             + currency1
-                             + " & "
-                             + currency2
-                             + "\nWartość:\t\t"
-                             + resultList.toString();
+                queryValue = query + " / Dla walut: " + currency1 + " & " + currency2 + "\nWartość:\t\t" + resultList.toString();
                 chartTitle = query + " / Dla walut: " + currency1 + " & " + currency2;
             }
         } else if (resultType == "double") {
@@ -143,13 +150,15 @@ public class Controller implements Initializable {
 
     }
 
-    @FXML private void clearList() {
+    @FXML
+    private void clearList() {
         queryValueList.clear();
         listOfData.getItems().clear();
         listOfData.getItems().addAll(queryValueList);
     }
 
-    @Override public void initialize(URL url, ResourceBundle rb) {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         initCurrencyList();
         queriesComboBox.getItems().addAll(queries[0], queries[1], queries[2]);
         periodComboBox.getItems().addAll(periods);
@@ -173,7 +182,8 @@ public class Controller implements Initializable {
             listOfQueryParameters.getItems().addAll(parameters3);
     }
 
-    @FXML private void drawChart() {
+    @FXML
+    private void drawChart() {
         String selectedValue = listOfData.getItems().get(0);
         try {
             if (selectedValue.contains(parameters3.get(0)) || selectedValue.contains(parameters3.get(1))) {
@@ -181,7 +191,7 @@ public class Controller implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("..\\line_chart.fxml"));
                 Parent root1 = (Parent) loader.load();
                 ChartController chartController = loader.getController();
-                if(selectedValue.contains(parameters3.get(0))) {
+                if (selectedValue.contains(parameters3.get(0))) {
                     chartController.drawLineChart(chartValues, parameters3.get(0));
                 } else
                     chartController.drawLineChart(chartValues, parameters3.get(1));
